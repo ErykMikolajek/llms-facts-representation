@@ -1,0 +1,12 @@
+torch
+transformers
+datasets
+numpy
+scipy
+scikit-learn
+hdbscan
+pandas
+matplotlib
+syntok
+pick
+tqdm
