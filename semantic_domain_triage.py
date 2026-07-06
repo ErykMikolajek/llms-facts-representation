@@ -31,6 +31,87 @@ DEFAULT_DATA_PATH = "data/tinystories_dataset"
 DEFAULT_LAYER_NUM = 4
 
 WORD_RE = re.compile(r"[a-zA-Z][a-zA-Z']+")
+COMMON_FUNCTION_TOKENS = {
+    "a",
+    "about",
+    "after",
+    "all",
+    "am",
+    "an",
+    "and",
+    "are",
+    "as",
+    "at",
+    "be",
+    "because",
+    "been",
+    "but",
+    "by",
+    "can",
+    "could",
+    "did",
+    "do",
+    "does",
+    "for",
+    "from",
+    "had",
+    "has",
+    "have",
+    "he",
+    "her",
+    "here",
+    "hers",
+    "him",
+    "his",
+    "how",
+    "i",
+    "if",
+    "in",
+    "is",
+    "it",
+    "its",
+    "just",
+    "let",
+    "like",
+    "many",
+    "me",
+    "more",
+    "my",
+    "next",
+    "no",
+    "not",
+    "of",
+    "on",
+    "one",
+    "or",
+    "our",
+    "out",
+    "she",
+    "so",
+    "some",
+    "that",
+    "the",
+    "their",
+    "them",
+    "then",
+    "there",
+    "they",
+    "this",
+    "to",
+    "too",
+    "very",
+    "was",
+    "we",
+    "were",
+    "what",
+    "when",
+    "where",
+    "who",
+    "why",
+    "with",
+    "you",
+    "your",
+}
 
 
 @dataclass
@@ -63,7 +144,12 @@ def normalize_token_text(token: str) -> str:
     return token
 
 
-def is_semantic_token(token: str, token_id: int, tokenizer: AutoTokenizer) -> bool:
+def is_semantic_token(
+    token: str,
+    token_id: int,
+    tokenizer: AutoTokenizer,
+    keep_common_function_tokens: bool = False,
+) -> bool:
     if token_id in set(tokenizer.all_special_ids):
         return False
     normalized = normalize_token_text(token)
@@ -72,6 +158,8 @@ def is_semantic_token(token: str, token_id: int, tokenizer: AutoTokenizer) -> bo
     if not re.search(r"[a-zA-Z]", normalized):
         return False
     if normalized.startswith("<") and normalized.endswith(">"):
+        return False
+    if not keep_common_function_tokens and normalized in COMMON_FUNCTION_TOKENS:
         return False
     return True
 
@@ -102,6 +190,7 @@ def compute_top_promoted_tokens(
     top_m: int,
     logit_batch_size: int,
     min_logit: float,
+    keep_common_function_tokens: bool,
 ) -> Tuple[sparse.csr_matrix, List[List[Dict[str, float]]]]:
     """Compute sparse logit-lens vectors from SAE decoder directions."""
 
@@ -135,7 +224,12 @@ def compute_top_promoted_tokens(
                         continue
 
                     token_text = tokenizer.decode([int(token_id)])
-                    if not is_semantic_token(token_text, int(token_id), tokenizer):
+                    if not is_semantic_token(
+                        token_text,
+                        int(token_id),
+                        tokenizer,
+                        keep_common_function_tokens=keep_common_function_tokens,
+                    ):
                         continue
 
                     normalized = normalize_token_text(token_text)
@@ -305,6 +399,59 @@ def select_orthogonal_domains(candidates: List[Dict], n_domains: int) -> Tuple[L
     return domains, similarity_matrix
 
 
+def summarize_domain_quality(
+    domains: Sequence[DomainInfo],
+    n_clusters: int,
+    noise_features: int,
+    valid_features: int,
+) -> Dict[str, object]:
+    total_top_tokens = 0
+    common_function_tokens = 0
+    small_domains = 0
+
+    for domain in domains:
+        if domain.size < 20:
+            small_domains += 1
+        for token in domain.top_tokens[:20]:
+            total_top_tokens += 1
+            if str(token["normalized"]) in COMMON_FUNCTION_TOKENS:
+                common_function_tokens += 1
+
+    noise_fraction = noise_features / valid_features if valid_features else 0.0
+    function_token_fraction = common_function_tokens / total_top_tokens if total_top_tokens else 0.0
+
+    return {
+        "selected_domains": len(domains),
+        "n_clusters": int(n_clusters),
+        "noise_features": int(noise_features),
+        "valid_features": int(valid_features),
+        "noise_fraction": float(noise_fraction),
+        "small_domains": int(small_domains),
+        "top_token_function_fraction": float(function_token_fraction),
+    }
+
+
+def validate_domain_selection(
+    domains: Sequence[DomainInfo],
+    min_required_domains: int,
+    allow_underfilled_domains: bool,
+    diagnostics: Dict[str, object],
+) -> None:
+    if len(domains) >= min_required_domains:
+        return
+
+    message = (
+        f"Only {len(domains)} semantic domains were selected, but at least "
+        f"{min_required_domains} are required. Diagnostics: {diagnostics}. "
+        "Try lowering --min-cluster-size/--min-samples, increasing --top-m, "
+        "or inspecting logit_lens_top_tokens.jsonl for over-filtered features."
+    )
+    if allow_underfilled_domains:
+        print(f"WARNING: {message}")
+        return
+    raise ValueError(message)
+
+
 def write_json(path: Path, payload) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
@@ -347,11 +494,25 @@ def write_assignments(
             )
 
 
-def write_domain_report(path: Path, domains: Sequence[DomainInfo], similarity_matrix: np.ndarray) -> None:
+def write_domain_report(
+    path: Path,
+    domains: Sequence[DomainInfo],
+    similarity_matrix: np.ndarray,
+    diagnostics: Optional[Dict[str, object]] = None,
+) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
         f.write("# Semantic Domain Triage Report\n\n")
         f.write(f"Selected domains: {len(domains)}\n\n")
+
+        if diagnostics:
+            f.write("## Diagnostics\n\n")
+            for key, value in diagnostics.items():
+                if isinstance(value, float):
+                    f.write(f"- {key}: {value:.4f}\n")
+                else:
+                    f.write(f"- {key}: {value}\n")
+            f.write("\n")
 
         for domain in domains:
             f.write(f"## Domain {domain.domain_id}: {domain.name}\n\n")
@@ -632,6 +793,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-validation-texts", type=int, default=None)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--generate-if-needed", action="store_true")
+    parser.add_argument("--min-required-domains", type=int, default=3)
+    parser.add_argument(
+        "--allow-underfilled-domains",
+        action="store_true",
+        help="Write outputs even when fewer than --min-required-domains domains are selected.",
+    )
+    parser.add_argument(
+        "--keep-common-function-tokens",
+        action="store_true",
+        help="Keep stopwords and common function words in logit-lens clustering.",
+    )
     return parser.parse_args()
 
 
@@ -666,6 +838,7 @@ def main() -> None:
         top_m=args.top_m,
         logit_batch_size=args.logit_batch_size,
         min_logit=args.min_logit,
+        keep_common_function_tokens=args.keep_common_function_tokens,
     )
 
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -686,6 +859,19 @@ def main() -> None:
         top_tokens_per_domain=args.top_tokens_per_domain,
     )
     domains, similarity_matrix = select_orthogonal_domains(candidates, args.n_domains)
+    noise_features = int(np.sum(labels == -1))
+    diagnostics = summarize_domain_quality(
+        domains=domains,
+        n_clusters=len(candidates),
+        noise_features=noise_features,
+        valid_features=len(valid_feature_ids),
+    )
+    validate_domain_selection(
+        domains=domains,
+        min_required_domains=args.min_required_domains,
+        allow_underfilled_domains=args.allow_underfilled_domains,
+        diagnostics=diagnostics,
+    )
 
     write_json(
         output_dir / "domains.json",
@@ -693,8 +879,14 @@ def main() -> None:
             "domains": [asdict(domain) for domain in domains],
             "domain_similarity": similarity_matrix.tolist(),
             "n_clusters": len(candidates),
-            "noise_features": int(np.sum(labels == -1)),
+            "noise_features": noise_features,
             "valid_features": int(len(valid_feature_ids)),
+            "diagnostics": diagnostics,
+            "filters": {
+                "keep_common_function_tokens": bool(args.keep_common_function_tokens),
+                "min_required_domains": int(args.min_required_domains),
+                "allow_underfilled_domains": bool(args.allow_underfilled_domains),
+            },
         },
     )
     write_assignments(
@@ -704,7 +896,7 @@ def main() -> None:
         total_features=sae.d_sae,
         domains=domains,
     )
-    write_domain_report(output_dir / "domain_report.md", domains, similarity_matrix)
+    write_domain_report(output_dir / "domain_report.md", domains, similarity_matrix, diagnostics)
 
     print(f"Selected {len(domains)} domains. Building validation sets...")
     validation_summary = build_validation_sets(

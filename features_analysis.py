@@ -1,31 +1,40 @@
 from __future__ import annotations  # TODO: refactor the code not to use this
 
-import torch
-from utils import find_device
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from autoencoder_training import TopKSAE
+import os
 import json
 from collections import defaultdict
 from dataclasses import dataclass, field, asdict
 from typing import List, Dict, Optional, Tuple
 import heapq
-from torch.utils.data import Dataset
 import numpy as np
+import torch
+from torch.utils.data import DataLoader, Dataset
+from tqdm import tqdm
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+from autoencoder_training import TopKSAE
+from utils import find_device
 
 # TODO: create this dataset while collecting activations
-def _create_activations_text_dataset(model: AutoModelForCausalLM, device: torch.device, layer_num: int, num_samples: int = 5000):
-    tokenized_seqs_validation = np.load('data/tinystories_dataset/sequenced/tokens_seqs_padded.npy')
+def _create_activations_text_dataset(
+    model: AutoModelForCausalLM,
+    device: torch.device,
+    layer_num: int,
+    tokens_path: str,
+    batch_size: int,
+    num_samples: int = 5000,
+):
+    tokenized_seqs_validation = np.load(tokens_path)
     if num_samples != -1:
         tokenized_seqs_validation = tokenized_seqs_validation[:num_samples]
-    BATCH_SIZE = 4
 
-    tokenized_seqs_validation_dataloader = DataLoader(tokenized_seqs_validation, batch_size=BATCH_SIZE, shuffle=False)
+    tokenized_seqs_validation_dataloader = DataLoader(tokenized_seqs_validation, batch_size=batch_size, shuffle=False)
     tokenized_seqs_validation_helper_arr = []
     activations_validation_helper_arr = []
 
     with torch.no_grad():
         for batch_idx, batch in enumerate(tqdm(tokenized_seqs_validation_dataloader)):
-            tokenized_seqs_validation_helper_arr.extend(batch)
+            tokenized_seqs_validation_helper_arr.extend(batch.cpu().numpy())
             input_ids = batch.to(device)
 
             outputs = model(
@@ -34,7 +43,7 @@ def _create_activations_text_dataset(model: AutoModelForCausalLM, device: torch.
                 return_dict=True
             )
             
-            layer_activations = outputs.hidden_states[LAYER_NUM + 1] 
+            layer_activations = outputs.hidden_states[layer_num + 1]
             layer_activations_np = layer_activations.cpu().numpy().astype(np.float16)
             
             activations_validation_helper_arr.extend(layer_activations_np)
@@ -55,8 +64,44 @@ def _create_activations_text_dataset(model: AutoModelForCausalLM, device: torch.
     return ActivationsTextDataset(activations_validation_helper_arr, tokenized_seqs_validation_helper_arr)
 
 
+def _json_safe(value):
+    if isinstance(value, np.generic):
+        return value.item()
+    if isinstance(value, tuple):
+        return [_json_safe(item) for item in value]
+    if isinstance(value, list):
+        return [_json_safe(item) for item in value]
+    if isinstance(value, dict):
+        return {key: _json_safe(item) for key, item in value.items()}
+    return value
+
+
+def _save_features_to_json(
+    analyzer: "ComprehensiveFeatureAnalyzer",
+    output_path: str,
+    include_dead_features: bool = True,
+):
+    payload = {
+        "summary": _json_safe(analyzer.get_summary_stats()),
+        "features": [
+            _json_safe(asdict(analysis))
+            for analysis in sorted(
+                analyzer.feature_analyses.values(),
+                key=lambda x: x.feature_id,
+            )
+            if include_dead_features or not analysis.is_dead
+        ],
+    }
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2, ensure_ascii=False)
+
+    print(f"Structured analysis saved to: {output_path}")
+    return output_path
+
+
 def _save_features_to_text(
-    analyzer: ComprehensiveFeatureAnalyzer,
+    analyzer: "ComprehensiveFeatureAnalyzer",
     output_path: str,
     include_dead_features: bool = False,
     max_examples_per_feature: int = 10
@@ -420,8 +465,16 @@ def analyze_sae(sae: TopKSAE, model: AutoModelForCausalLM, tokenizer: AutoTokeni
     print(f"Number of features to analyze: {analyzer.num_features}")
     print("Starting analysis of activations...")
 
-    activations_text_dataset = _create_activations_text_dataset(model, device, layer_num, num_samples=-1)
-    activations_loader = DataLoader(activations_text_dataset, batch_size=4, shuffle=False)
+    tokens_path = os.path.join(path_dir, "sequenced/tokens_seqs_padded.npy")
+    activations_text_dataset = _create_activations_text_dataset(
+        model=model,
+        device=device,
+        layer_num=layer_num,
+        tokens_path=tokens_path,
+        batch_size=batch_size,
+        num_samples=-1,
+    )
+    activations_loader = DataLoader(activations_text_dataset, batch_size=batch_size, shuffle=False)
     print(f"Dataset: {len(activations_loader)} batches")
 
     for batch_idx, (acts, tokens) in enumerate(tqdm(activations_loader, desc="Analysis of features")):
@@ -453,4 +506,16 @@ def analyze_sae(sae: TopKSAE, model: AutoModelForCausalLM, tokenizer: AutoTokeni
         else:
             print(f"  {key}: {value:,}" if isinstance(value, int) else f"  {key}: {value}")
 
-    _save_features_to_text(analyzer, os.path.join(path_dir, 'analysis/features_analysis.txt'), include_dead_features=False, max_examples_per_feature=25)
+    output_dir = os.path.join(path_dir, "analysis")
+    os.makedirs(output_dir, exist_ok=True)
+    _save_features_to_text(
+        analyzer,
+        os.path.join(output_dir, "features_analysis.txt"),
+        include_dead_features=False,
+        max_examples_per_feature=25,
+    )
+    _save_features_to_json(
+        analyzer,
+        os.path.join(output_dir, "features_analysis.json"),
+        include_dead_features=True,
+    )
