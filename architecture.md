@@ -1,8 +1,33 @@
 # Architektura Projektu
 
-Ten dokument opisuje aktualną architekturę repozytorium `llms-facts-representation` oraz stan prac nad koncepcją **SAE-guided MoEfication** dla `roneneldan/TinyStories-1M`.
+Ten dokument opisuje aktualną architekturę repozytorium `llms-facts-representation`. Aktywnym celem jest storage-bounded trening Top-K SAE dla `EleutherAI/pythia-160m`; semantic triage, pruning i MoE są odłożonymi etapami.
 
-Główna idea: najpierw uczymy Top-K SAE na aktywacjach warstwy 4, potem grupujemy cechy SAE w domeny semantyczne, mapujemy te domeny na fizyczne neurony MLP i eksportujemy domenowe MLP-only eksperci przez trwałe zerowanie wag. Router i pełne MoE są jeszcze etapami przyszłymi.
+Główna idea aktywnego pipeline’u: sekwencjonujemy dane, generujemy aktywacje tylko wybranej warstwy przez hook, przekazujemy je w ograniczonych chunkach do trenera SAE i po każdym chunku zapisujemy resumable checkpoint. Pełny zbiór aktywacji nie jest przechowywany.
+
+## Aktywna ścieżka treningu SAE
+
+```mermaid
+flowchart LR
+  rawText["CSV or Pile JSONL shards"] --> tokenMemmap["tokens_seqs_padded.npy + attention_mask.npy"]
+  tokenMemmap --> chunkForward["One-layer hook, bounded chunk"]
+  chunkForward --> saeUpdate["Top-K SAE update"]
+  saeUpdate --> checkpoint["Atomic checkpoint + cursor"]
+  checkpoint --> chunkForward
+```
+
+`activations_collecting.iter_activation_chunks()` wywołuje bezpośrednio
+backbone GPT-Neo/GPT-NeoX, więc nie tworzy logitów słownika ani wszystkich
+hidden states. Chunk zawiera wyłącznie ważne tokeny i jest zwalniany po
+zakończeniu aktualizacji SAE. Wznowienie zaczyna się od `next_sequence`.
+
+Dla Pythia używana jest struktura GPT-NeoX:
+
+- `model.gpt_neox.layers[layer_num]` jako blok,
+- `model.gpt_neox.layers[layer_num].mlp` jako MLP,
+- `hidden_size=768`, `intermediate_size=3072`.
+
+Starsze sekcje tego dokumentu opisujące domeny, pruning i MoE pozostają
+referencją dla późniejszych eksperymentów i nie są wymagane do treningu SAE.
 
 ## Widok Wysokiego Poziomu
 
@@ -32,6 +57,7 @@ Plik: `dataset_sequencing.py`
 Wejście:
 
 - `data/tinystories_dataset/train.csv` albo `validation.csv`,
+- albo katalog z Pile-style `*.jsonl`, `*.jsonl.zst` lub `*.jsonl.gz` zawierającymi pole `text`,
 - kolumna `text`,
 - tokenizer `EleutherAI/gpt-neo-125M`.
 
@@ -52,26 +78,30 @@ flowchart TD
   padSeqs --> tokensNpy["tokens_seqs_padded.npy"]
 ```
 
+Dla JSONL shardy są iterowane plik po pliku i rekord po rekordzie. Opcje
+`max-files`, `max-documents` i `max-tokens` ograniczają pilot albo rozmiar
+produkcji bez kopiowania źródeł do katalogu roboczego. `dataset_info.json`
+zawiera listę shardów oraz liczbę wykorzystanych dokumentów.
+
 ### 2. Ekstrakcja Aktywacji
 
 Plik: `activations_collecting.py`
 
-Ekstrahowane jest `outputs.hidden_states[layer_num + 1]`, czyli hidden state po bloku transformera. Dla warstwy 4 i TinyStories-1M ma wymiar `64`.
+Ekstrahowany jest output wybranego bloku przez forward hook. Dla Pythia jest to
+wyjście `model.gpt_neox.layers[layer_num]` przed końcową normą backbone’u;
+chunk jest spłaszczany do ważnych tokenów i od razu przekazywany do SAE.
 
 ```mermaid
 flowchart TD
-  tokensNpy["tokens_seqs_padded.npy"] --> tokenDataset["TokenDataset"]
-  tokenDataset --> baseModel["TinyStories 1M"]
-  baseModel --> hiddenStates["outputs.hidden_states"]
-  hiddenStates --> layer4["Layer 4 Hidden State"]
-  layer4 --> activationMemmap["TEMP activations memmap"]
-  activationMemmap --> activationsNpy["activations_layer_4.npy"]
+  tokensNpy["tokens + attention mask"] --> tokenDataset["Memory-mapped TokenStore"]
+  tokenDataset --> baseModel["Pythia/GPT-Neo backbone"]
+  baseModel --> layerHook["One selected layer hook"]
+  layerHook --> boundedChunk["Bounded float16 chunk"]
+  boundedChunk --> saeTraining["Immediate SAE update"]
 ```
 
-Wyjście:
-
-- `data/tinystories_dataset/activations/activations_layer_4.npy`,
-- tymczasowy memmap i plik progress do wznawiania.
+Wyjście nie zawiera pełnego pliku aktywacji. Trwałe są tokeny, maska oraz
+checkpoint SAE z kursorem wznowienia.
 
 ### 3. Top-K SAE
 
@@ -79,10 +109,10 @@ Plik: `autoencoder_training.py`
 
 Architektura:
 
-- wejście `d_model=64`,
-- słownik `d_sae=4096`,
-- aktywność Top-K z `k=8`,
-- dekoder `W_dec` o kształcie `4096 x 64`,
+- wejście `d_model=768` dla profilu Pythia (`64` pozostaje w profilu tiny),
+- słownik `d_sae=12288` w profilu local-50gb,
+- aktywność Top-K z `k=64` w profilu Pythia,
+- dekoder `W_dec` o kształcie `d_sae x d_model`,
 - loss MSE rekonstrukcji hidden state.
 
 ```mermaid
@@ -98,9 +128,9 @@ flowchart LR
 
 Wyjście:
 
-- `topk_sae_layer_4.pt`,
-- `topk_sae_layer_4_best.pt`,
-- opcjonalne checkpointy krokowe.
+- `topk_sae_layer_<layer>.pt`,
+- `topk_sae_layer_<layer>_best.pt`,
+- ograniczona liczba checkpointów krokowych.
 
 ### 4. Analiza Cech SAE
 

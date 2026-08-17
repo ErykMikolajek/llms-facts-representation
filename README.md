@@ -1,38 +1,29 @@
 # llms-facts-representation
 
-Repozytorium do pracy magisterskiej nad reprezentacją faktów i konceptów w małym modelu językowym. Obecny kierunek badawczy to **SAE-guided MoEfication**: wykorzystanie Top-K Sparse Autoencodera do znalezienia semantycznych domen, zmapowania ich na fizyczne neurony MLP i wycięcia wyspecjalizowanych ekspertów domenowych.
+Repozytorium do pracy magisterskiej nad reprezentacją faktów i konceptów w małym modelu językowym. Aktualnym celem jest solidny, storage-bounded trening **Top-K Sparse Autoencodera**. Późniejsze etapy semantic triage, pruning i MoE pozostają odłożonym eksperymentem.
 
-Model bazowy to `roneneldan/TinyStories-1M`, tokenizer to `EleutherAI/gpt-neo-125M`, a główna analizowana warstwa to warstwa `4`.
+Głównym celem jest `EleutherAI/pythia-160m` (GPT-NeoX), z warstwą `6`, `hidden_size=768` i MLP `768 -> 3072 -> 768`. Profil `tiny` zachowuje wcześniejszą konfigurację TinyStories do smoke testów.
 
 Szczegółowy opis architektury, przepływów i artefaktów znajduje się w [`architecture.md`](architecture.md).
 
-## Aktualny Status
+## Aktualny pipeline SAE
 
-Projekt ma działający rdzeń interpretowalności:
+- sekwencjonowanie zapisuje tokeny oraz jawny `attention_mask` przez memmap,
+- kolektor używa hooka jednej warstwy i nie uruchamia `output_hidden_states=True`,
+- aktywacje są spłaszczane do ograniczonych chunków i zużywane natychmiast przez SAE,
+- nie powstaje pełny plik aktywacji dla całego datasetu,
+- checkpoint SAE przechowuje optimizer, scheduler, RNG, historię oraz `epoch/next_sequence`,
+- trening można wznowić po zakończonym chunku,
+- analiza cech również czyta aktywacje strumieniowo i liczy logit lens blokami.
 
-- preprocessing TinyStories do stałych sekwencji tokenów,
-- ekstrakcję hidden state z warstwy 4,
-- trening Top-K SAE z ekspansją `64 -> 4096`,
-- analizę cech SAE z przykładami aktywacji i logit lens,
-- klastrowanie cech SAE przez HDBSCAN w domeny semantyczne,
-- budowę walidacji per domena,
-- mapowanie prawdziwych post-aktywacji MLP na zagregowany sygnał domen SAE,
-- pruning wag `c_fc` i `c_proj` do MLP-only ekspertów domenowych.
-
-Projekt nie ma jeszcze pełnej architektury MoE:
-
-- nie ma wytrenowanego routera liniowego,
-- nie ma podmiany warstwy MLP na zespół ekspertów z hard-routingiem Top-1,
-- nie ma walidacji perplexity dla modelu bazowego, pojedynczych ekspertów i złożonego MoE.
-
-Ostatnio zaobserwowany lokalny stan artefaktów w `other/domain_triage/` jest częściowo niezgodny z wymaganiami: HDBSCAN wybrał tylko 2 domeny, jedna domena ma zerowy sygnał SAE na walidacji, a jej pruning prowadził do pustego eksperta. Kod został wzmocniony tak, aby takie przypadki były teraz błędem domyślnym, a nie cichym sukcesem.
+Pruning i budowanie MoE nie są obecnie częścią aktywnego celu.
 
 ## Struktura Kodu
 
-- `main.py` - uruchamia podstawowy pipeline: sequencing, aktywacje, SAE, analiza cech.
-- `dataset_sequencing.py` - CSV TinyStories do `tokens_seqs_padded.npy`.
-- `activations_collecting.py` - forward modelu i zapis `outputs.hidden_states[layer_num + 1]`.
-- `autoencoder_training.py` - implementacja i trening `TopKSAE`.
+- `main.py` - CLI etapów `sequence`, `train-sae`, `analyze` i `all`.
+- `dataset_sequencing.py` - CSV albo Pile-style JSONL/JSONL.ZST do memmapów tokenów i maski.
+- `activations_collecting.py` - bounded one-layer activation chunks dla GPT-Neo/GPT-NeoX.
+- `autoencoder_training.py` - `TopKSAE` oraz resumable streaming trainer.
 - `features_analysis.py` - raport tekstowy i JSON z analizą cech SAE.
 - `semantic_domain_triage.py` - logit lens, HDBSCAN, domeny i walidacje domenowe.
 - `topographic_mlp_sae_mapping.py` - korelacja residual hidden state z domenami SAE, etap eksploracyjny.
@@ -51,31 +42,115 @@ Katalogi `data/`, `models/` i `other/` są ignorowane przez Git, bo zawierają d
 pip install -r requirements.txt
 ```
 
-Wymagane biblioteki obejmują `torch`, `transformers`, `datasets`, `numpy`, `scipy`, `scikit-learn`, `hdbscan`, `pandas`, `syntok`, `pick` i `tqdm`.
+Wymagane biblioteki obejmują `torch`, `transformers`, `datasets`, `numpy`, `scipy`, `scikit-learn`, `hdbscan`, `pandas`, `syntok`, `zstandard`, `pick` i `tqdm`.
 
-## Pipeline Podstawowy
+## Pipeline SAE
+
+Smoke test TinyStories:
 
 ```bash
-python3 main.py
+python3 main.py --profile tiny --stage all --no-interactive
 ```
 
-Domyślna konfiguracja w `main.py`:
+Pythia-160m, lokalny profil:
 
-- model: `roneneldan/TinyStories-1M`,
-- tokenizer: `EleutherAI/gpt-neo-125M`,
-- dane: `data/tinystories_dataset`,
-- długość sekwencji: `256`,
-- warstwa: `4`,
-- frakcja datasetu: `0.01`,
-- Top-K SAE: `d_model=64`, `expansion_factor=64`, `k=8`.
+```bash
+python3 main.py --profile local-50gb --stage all \
+  --input-file train.csv --max-sequences 20000 --no-interactive
+```
+
+### Kaggle: Pythia-160m i shardy The Pile
+
+`main.py` czyta katalog z wieloma plikami `*.jsonl`, `*.jsonl.zst` albo
+`*.jsonl.gz` strumieniowo. Źródła w `/kaggle/input` pozostają niezmienione;
+pod `--data-path` powstają tokeny, maska, manifest i checkpointy.
+
+Gotowy, uporządkowany notebook dla wytrenowanego modelu Pile-CC znajduje się w
+[`kaggle_pythia160m_sae.ipynb`](kaggle_pythia160m_sae.ipynb). Na jego początku
+ustawia się `RUN_MODE = "TRAIN"` albo `RUN_MODE = "ANALYZE"`. Analiza ma
+domyślnie `ANALYSIS_MAX_SEQUENCES = None`, czyli przechodzi po całym zbiorze
+sekwencji z `/kaggle/working/pythia160m_sae_pilecc` i ładuje checkpoint
+`/kaggle/input/datasets/erykmikoajek/trained-sae-models/topk_sae_layer_6_best.pt`.
+
+Argument `--verbose low --verbose-interval 1000` wyłącza odświeżanie `tqdm` w
+logach Kaggle. Zamiast tego trening wypisuje postęp co 1000 kroków, a analiza
+co 1000 chunków. `--verbose high` zachowuje pełne paski postępu.
+
+```python
+from pathlib import Path
+import subprocess
+import sys
+
+CODE_DIR = Path("/kaggle/input/datasets/erykmikoajek/sae-training-and-moeffication")
+PILE_DIR = Path("/kaggle/input/datasets/dschettler8845/the-pile-github-files-part-01")
+OUT_DIR = Path("/kaggle/working/pythia160m_sae")
+MAIN = CODE_DIR / "main.py"
+
+def run_cli(*args):
+    command = [sys.executable, str(MAIN), *map(str, args)]
+    print(" ".join(command))
+    subprocess.run(command, check=True)
+```
+
+Pilot sekwencjonowania:
+
+```python
+run_cli(
+    "--stage", "sequence", "--profile", "colab",
+    "--model-name", "EleutherAI/pythia-160m",
+    "--tokenizer-name", "EleutherAI/pythia-160m",
+    "--data-path", OUT_DIR, "--input-path", PILE_DIR,
+    "--file-pattern", "*.jsonl*", "--max-files", 1,
+    "--max-tokens", 5_000_000, "--seq-length", 256,
+    "--no-interactive",
+)
+```
+
+Po sprawdzeniu pilota uruchom trening kontrolny z `--max-steps 50`, a potem
+powtórz komendę bez tego limitu. Ten sam katalog `OUT_DIR` pozwala wznowić
+checkpoint od ostatniego zakończonego chunka:
+
+```python
+run_cli(
+    "--stage", "train-sae", "--profile", "colab",
+    "--model-name", "EleutherAI/pythia-160m",
+    "--tokenizer-name", "EleutherAI/pythia-160m",
+    "--data-path", OUT_DIR, "--layer-num", 6, "--seq-length", 256,
+    "--model-batch-size", 2, "--chunk-sequences", 16,
+    "--batch-size-sae", 512, "--expansion-factor", 8, "--k", 64,
+    "--num-epochs", 1, "--max-steps", 50, "--no-interactive",
+)
+```
+
+Na właściwym przebiegu usuń `--max-steps`; zachowaj `OUT_DIR` i konfigurację.
+Profil `colab` jest bezpieczniejszym punktem startowym na pojedynczej sesji,
+a `local-50gb` daje większy słownik SAE.
+
+Jeżeli Kaggle przydzieli Tesla P100, a PyTorch zgłasza brak kernela dla
+`sm_60`, uruchom notebook na T4/L4/A100 albo wymuś CPU przez
+`SAE_DEVICE=cpu`. `utils.find_device()` wykrywa teraz tę niezgodność i nie
+próbuje wykonywać nieobsługiwanych kerneli CUDA.
+
+Po przerwaniu powtórzenie tej samej komendy wznowi checkpoint SAE. Aby zacząć
+od nowa, użyj `--no-resume` i osobnego katalogu/checkpointu.
+
+Profile są zdefiniowane w `main.py`:
+
+- `tiny`: TinyStories, `64 -> 4096`, `k=8`,
+- `local-50gb`: Pythia-160m, `d_sae=12288`, `k=64`, warstwa `6`,
+- `colab`: mniejszy wariant Pythia z krótszym treningiem.
 
 Główne artefakty:
 
-- `data/tinystories_dataset/sequenced/tokens_seqs_padded.npy`,
-- `data/tinystories_dataset/activations/activations_layer_4.npy`,
-- `data/tinystories_dataset/models/checkpoints/topk_sae_layer_4_best.pt`,
-- `data/tinystories_dataset/analysis/features_analysis.txt`,
-- `data/tinystories_dataset/analysis/features_analysis.json`.
+- `sequenced/tokens_seqs_padded.npy`,
+- `sequenced/attention_mask.npy`,
+- `models/checkpoints/topk_sae_layer_<layer>.pt`,
+- `models/checkpoints/topk_sae_layer_<layer>_best.pt`,
+- `analysis/features_analysis.txt` i `.json` po opcjonalnym etapie `analyze`.
+
+Kolektor nie zapisuje `activations/activations_layer_<layer>.npy`; parametr
+`keep_full_file=True` w funkcji kompatybilności jest przeznaczony wyłącznie do
+odtwarzania starych eksperymentów.
 
 ## Semantic Domain Triage
 

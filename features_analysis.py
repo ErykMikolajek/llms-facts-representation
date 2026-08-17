@@ -8,61 +8,11 @@ from typing import List, Dict, Optional, Tuple
 import heapq
 import numpy as np
 import torch
-from torch.utils.data import DataLoader, Dataset
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from autoencoder_training import TopKSAE
 from utils import find_device
-
-# TODO: create this dataset while collecting activations
-def _create_activations_text_dataset(
-    model: AutoModelForCausalLM,
-    device: torch.device,
-    layer_num: int,
-    tokens_path: str,
-    batch_size: int,
-    num_samples: int = 5000,
-):
-    tokenized_seqs_validation = np.load(tokens_path)
-    if num_samples != -1:
-        tokenized_seqs_validation = tokenized_seqs_validation[:num_samples]
-
-    tokenized_seqs_validation_dataloader = DataLoader(tokenized_seqs_validation, batch_size=batch_size, shuffle=False)
-    tokenized_seqs_validation_helper_arr = []
-    activations_validation_helper_arr = []
-
-    with torch.no_grad():
-        for batch_idx, batch in enumerate(tqdm(tokenized_seqs_validation_dataloader)):
-            tokenized_seqs_validation_helper_arr.extend(batch.cpu().numpy())
-            input_ids = batch.to(device)
-
-            outputs = model(
-                input_ids,
-                output_hidden_states=True,
-                return_dict=True
-            )
-            
-            layer_activations = outputs.hidden_states[layer_num + 1]
-            layer_activations_np = layer_activations.cpu().numpy().astype(np.float16)
-            
-            activations_validation_helper_arr.extend(layer_activations_np)
-    
-    class ActivationsTextDataset(Dataset):
-        def __init__(self, activations_arr, tokenized_seqs_arr):
-            self.activations = np.array(activations_arr)
-            self.tokenized_seqs = np.array(tokenized_seqs_arr)
-            self.num_samples, self.seq_len, self.d_model = self.activations.shape
-            self.total_vectors = self.num_samples * self.seq_len
-        
-        def __len__(self):
-            return min(len(self.activations), len(self.tokenized_seqs))
-        
-        def __getitem__(self, idx):
-            return self.activations[idx], self.tokenized_seqs[idx]
-
-    return ActivationsTextDataset(activations_validation_helper_arr, tokenized_seqs_validation_helper_arr)
-
 
 def _json_safe(value):
     if isinstance(value, np.generic):
@@ -136,8 +86,11 @@ def _save_features_to_text(
             f.write("="*80 + "\n\n")
             
             if analysis.is_dead:
-                f.write("STATUS: DEAD FEATURE (no activations)\n\n")
+                f.write("STATUS: DEAD DURING TRAINING\n\n")
                 continue
+
+            if not analysis.observed_in_analysis:
+                f.write("STATUS: NOT OBSERVED IN ANALYSIS SAMPLE\n\n")
             
             f.write("ACTIVATION STATISTICS\n")
             f.write("-"*40 + "\n")
@@ -214,6 +167,11 @@ class FeatureAnalysis:
     top_suppressed_tokens: List[Tuple[str, float]] = field(default_factory=list)
     
     common_trigger_tokens: List[Tuple[str, int]] = field(default_factory=list)
+
+    # A feature may be alive during training but absent from a sampled
+    # analysis slice. Keep these scopes separate from the legacy is_dead flag.
+    observed_in_analysis: bool = False
+    observed_in_training: Optional[bool] = None
     
     is_dead: bool = False
     
@@ -230,7 +188,8 @@ class ComprehensiveFeatureAnalyzer:
         context_size: int = 30,
         top_k_examples: int = 20,
         activation_threshold: float = 0.05,
-        top_k_logits: int = 15
+        top_k_logits: int = 15,
+        training_usage_counts: Optional[np.ndarray] = None,
     ):
         self.sae = sae_model
         self.llm = llm_model
@@ -240,8 +199,17 @@ class ComprehensiveFeatureAnalyzer:
         self.top_k_examples = top_k_examples
         self.activation_threshold = activation_threshold
         self.top_k_logits = top_k_logits
-        
         self.num_features = sae_model.d_sae
+
+        self.training_usage_counts = None
+        if training_usage_counts is not None:
+            counts = np.asarray(training_usage_counts).reshape(-1)
+            if counts.size != self.num_features:
+                raise ValueError(
+                    "training_usage_counts length does not match SAE feature count: "
+                    f"{counts.size} != {self.num_features}"
+                )
+            self.training_usage_counts = counts
         
         self.feature_analyses: Dict[int, FeatureAnalysis] = {
             i: FeatureAnalysis(feature_id=i) for i in range(self.num_features)
@@ -278,7 +246,7 @@ class ComprehensiveFeatureAnalyzer:
         return context_before, context_after, full_context
     
     def process_batch(
-        self, 
+        self,
         activations: torch.Tensor,
         tokens: torch.Tensor,
         batch_start_idx: int
@@ -286,6 +254,13 @@ class ComprehensiveFeatureAnalyzer:
         """Processes a batch of activations and collects statistics."""
         
         self.sae.eval()
+        if activations.ndim == 2:
+            # Streaming extraction supplies valid tokens as [N, D]. Treat one
+            # bounded chunk as a pseudo-sequence; this keeps analysis bounded
+            # without requiring a complete activation file. Context examples
+            # remain useful within the chunk and are never used for training.
+            activations = activations.unsqueeze(0)
+            tokens = tokens.reshape(1, -1)
         batch_size, seq_len, _ = activations.shape
         
         with torch.no_grad():
@@ -358,34 +333,49 @@ class ComprehensiveFeatureAnalyzer:
         
         self._total_tokens_processed += batch_size * seq_len
     
-    def compute_logit_lens(self):
+    def compute_logit_lens(self, logit_batch_size: int = 256):
         """Computes logit lens for all features - which tokens are promoted."""
         
         print("Calculating logit lens for all features...")
         
-        W_U = self.llm.lm_head.weight.detach().to(self.device)  # [vocab_size, d_model]
+        output_embeddings = self.llm.get_output_embeddings()
+        if output_embeddings is None or not hasattr(output_embeddings, "weight"):
+            raise ValueError("Model does not expose output embeddings for logit lens")
+        # The Pythia checkpoint may load the unembedding matrix in float16,
+        # while the SAE checkpoint is normally float32. Matmul requires both
+        # operands to have the same dtype; use float32 for stable logit lens.
+        W_U = output_embeddings.weight.detach().to(
+            self.device, dtype=torch.float32
+        )  # [vocab_size, d_model]
+
+        W_dec = self.sae.W_dec.detach().to(
+            self.device, dtype=torch.float32
+        )  # [d_sae, d_model]
         
-        W_dec = self.sae.W_dec.detach().to(self.device)  # [d_sae, d_model]
-        
-        # [d_sae, d_model] @ [d_model, vocab_size] -> [d_sae, vocab_size]
-        feature_logits = W_dec @ W_U.T
-        
-        for feat_idx in range(self.num_features):
-            logits = feature_logits[feat_idx]
-            
-            top_vals, top_ids = torch.topk(logits, self.top_k_logits)
-            promoted = [
-                (self.tokenizer.decode([tid.item()]), val.item()) 
-                for tid, val in zip(top_ids, top_vals)
-            ]
-            self.feature_analyses[feat_idx].top_promoted_tokens = promoted
-            
-            bottom_vals, bottom_ids = torch.topk(logits, self.top_k_logits, largest=False)
-            suppressed = [
-                (self.tokenizer.decode([tid.item()]), val.item()) 
-                for tid, val in zip(bottom_ids, bottom_vals)
-            ]
-            self.feature_analyses[feat_idx].top_suppressed_tokens = suppressed
+        if logit_batch_size < 1:
+            raise ValueError("logit_batch_size must be positive")
+
+        # Compute feature logits in blocks. A full Pythia SAE x vocabulary
+        # matrix can easily occupy multiple gigabytes.
+        with torch.no_grad():
+            for start in range(0, self.num_features, logit_batch_size):
+                end = min(start + logit_batch_size, self.num_features)
+                feature_logits = W_dec[start:end] @ W_U.T
+                for local_idx, logits in enumerate(feature_logits):
+                    feat_idx = start + local_idx
+                    top_vals, top_ids = torch.topk(logits, self.top_k_logits)
+                    self.feature_analyses[feat_idx].top_promoted_tokens = [
+                        (self.tokenizer.decode([tid.item()]), val.item())
+                        for tid, val in zip(top_ids, top_vals)
+                    ]
+
+                    bottom_vals, bottom_ids = torch.topk(
+                        logits, self.top_k_logits, largest=False
+                    )
+                    self.feature_analyses[feat_idx].top_suppressed_tokens = [
+                        (self.tokenizer.decode([tid.item()]), val.item())
+                        for tid, val in zip(bottom_ids, bottom_vals)
+                    ]
         
     
     def finalize_analysis(self):
@@ -395,6 +385,7 @@ class ComprehensiveFeatureAnalyzer:
         
         for feat_idx in range(self.num_features):
             analysis = self.feature_analyses[feat_idx]
+            analysis.observed_in_analysis = self._activation_counts[feat_idx] > 0
             
             if self._activation_counts[feat_idx] > 0:
                 analysis.total_activations = self._activation_counts[feat_idx]
@@ -405,7 +396,16 @@ class ComprehensiveFeatureAnalyzer:
                     self._activation_counts[feat_idx] / self._total_tokens_processed
                 )
             else:
-                analysis.is_dead = True
+                # Absence from this analysis sample is not enough to call a
+                # feature dead. Training usage_counts, when available below,
+                # is the authoritative scope for that label.
+                analysis.is_dead = False
+
+            if self.training_usage_counts is not None:
+                analysis.observed_in_training = bool(
+                    self.training_usage_counts[feat_idx] > 0
+                )
+                analysis.is_dead = not analysis.observed_in_training
             
             heap = self._example_heaps[feat_idx]
             examples = [item[2] for item in sorted(heap, key=lambda x: -x[0])]
@@ -420,17 +420,27 @@ class ComprehensiveFeatureAnalyzer:
         
         dead_count = sum(1 for a in self.feature_analyses.values() if a.is_dead)
         alive_count = self.num_features - dead_count
+        observed_count = sum(
+            1 for a in self.feature_analyses.values()
+            if a.observed_in_analysis
+        )
         
         print(f"Analysis completed.")
         print(f"  - Total features: {self.num_features}")
-        print(f"  - Active features: {alive_count}")
-        print(f"  - Dead features: {dead_count}")
+        print(f"  - Training-active features: {alive_count}")
+        print(f"  - Training-dead features: {dead_count}")
+        print(f"  - Observed in analysis sample: {observed_count}")
+        print(f"  - Not observed in analysis sample: {self.num_features - observed_count}")
         print(f"  - Processed tokens: {self._total_tokens_processed:,}")
     
     def get_summary_stats(self) -> Dict:
         """Returns summary statistics."""
         
         active_features = [a for a in self.feature_analyses.values() if not a.is_dead]
+        observed_features = [
+            a for a in self.feature_analyses.values()
+            if a.observed_in_analysis
+        ]
         
         if not active_features:
             return {"error": "No active features"}
@@ -439,6 +449,10 @@ class ComprehensiveFeatureAnalyzer:
             "total_features": self.num_features,
             "active_features": len(active_features),
             "dead_features": self.num_features - len(active_features),
+            "training_active_features": len(active_features),
+            "training_dead_features": self.num_features - len(active_features),
+            "observed_in_analysis_features": len(observed_features),
+            "unobserved_in_analysis_features": self.num_features - len(observed_features),
             "mean_activation_frequency": np.mean([a.activation_frequency for a in active_features]),
             "max_activation_frequency": max(a.activation_frequency for a in active_features),
             "min_activation_frequency": min(a.activation_frequency for a in active_features),
@@ -446,7 +460,67 @@ class ComprehensiveFeatureAnalyzer:
         }
 
 
-def analyze_sae(sae: TopKSAE, model: AutoModelForCausalLM, tokenizer: AutoTokenizer, path_dir: str, layer_num: int, top_k: int = 10, context_size: int = 25, top_k_examples: int = 15, activation_threshold: float = 0.03, batch_size: int = 4):
+def _analysis_ranges(
+    sequence_count: int,
+    max_sequences: Optional[int],
+    chunk_sequences: int,
+    sampling: str,
+) -> List[Tuple[int, int]]:
+    """Build contiguous windows for head, tail or stratified uniform sampling."""
+    if max_sequences is None or max_sequences >= sequence_count:
+        return [(0, sequence_count)]
+    if max_sequences < 1:
+        raise ValueError("max_sequences must be positive")
+    if sampling == "head":
+        return [(0, max_sequences)]
+    if sampling == "tail":
+        return [(sequence_count - max_sequences, sequence_count)]
+    if sampling != "uniform":
+        raise ValueError(f"Unknown analysis sampling mode: {sampling}")
+
+    window_count = (max_sequences + chunk_sequences - 1) // chunk_sequences
+    starts = np.linspace(
+        0,
+        max(0, sequence_count - chunk_sequences),
+        window_count,
+        dtype=int,
+    )
+    ranges = []
+    remaining = max_sequences
+    for start in starts:
+        size = min(chunk_sequences, remaining)
+        start = int(start)
+        end = min(sequence_count, start + size)
+        ranges.append((start, end))
+        remaining -= end - start
+        if remaining <= 0:
+            break
+    return ranges
+
+
+def analyze_sae(
+    sae: TopKSAE,
+    model: AutoModelForCausalLM,
+    tokenizer: AutoTokenizer,
+    path_dir: str,
+    layer_num: int,
+    top_k: int = 10,
+    context_size: int = 25,
+    top_k_examples: int = 15,
+    activation_threshold: float = 0.03,
+    batch_size: int = 4,
+    chunk_sequences: int = 32,
+    logit_batch_size: int = 256,
+    max_sequences: Optional[int] = None,
+    sampling: str = "head",
+    training_usage_counts: Optional[np.ndarray] = None,
+    verbose: str = "high",
+    verbose_interval: int = 1000,
+):
+    if verbose not in {"low", "high"}:
+        raise ValueError("verbose must be 'low' or 'high'")
+    if verbose_interval < 1:
+        raise ValueError("verbose_interval must be positive")
     device = find_device()
     sae.to(device)
     sae.eval()
@@ -459,40 +533,106 @@ def analyze_sae(sae: TopKSAE, model: AutoModelForCausalLM, tokenizer: AutoTokeni
         context_size=context_size,
         top_k_examples=top_k_examples,
         activation_threshold=activation_threshold,
-        top_k_logits=top_k
+        top_k_logits=top_k,
+        training_usage_counts=training_usage_counts,
     )
 
     print(f"Number of features to analyze: {analyzer.num_features}")
     print("Starting analysis of activations...")
 
     tokens_path = os.path.join(path_dir, "sequenced/tokens_seqs_padded.npy")
-    activations_text_dataset = _create_activations_text_dataset(
-        model=model,
-        device=device,
-        layer_num=layer_num,
-        tokens_path=tokens_path,
-        batch_size=batch_size,
-        num_samples=-1,
+    mask_path = os.path.join(path_dir, "sequenced/attention_mask.npy")
+    tokens_mm = np.load(tokens_path, mmap_mode="r")
+    masks_mm = np.load(mask_path, mmap_mode="r") if os.path.exists(mask_path) else None
+    if max_sequences is not None and max_sequences < 1:
+        raise ValueError("max_sequences must be positive")
+    sequence_count = tokens_mm.shape[0]
+    ranges = _analysis_ranges(
+        sequence_count=sequence_count,
+        max_sequences=max_sequences,
+        chunk_sequences=chunk_sequences,
+        sampling=sampling,
     )
-    activations_loader = DataLoader(activations_text_dataset, batch_size=batch_size, shuffle=False)
-    print(f"Dataset: {len(activations_loader)} batches")
+    sampled_sequences = sum(end - start for start, end in ranges)
+    print(
+        f"Sequences to analyze: {sampled_sequences:,}/{sequence_count:,}; "
+        f"sampling={sampling}"
+    )
 
-    for batch_idx, (acts, tokens) in enumerate(tqdm(activations_loader, desc="Analysis of features")):
-        analyzer.process_batch(
-            activations=acts,
-            tokens=tokens,
-            batch_start_idx=batch_idx * batch_size
+    from activations_collecting import iter_activation_chunks
+
+    total_chunks = sum(
+        (end - start + chunk_sequences - 1) // chunk_sequences
+        for start, end in ranges
+    )
+    chunk_count = 0
+    progress = None
+    if verbose == "high":
+        progress = tqdm(
+            total=total_chunks,
+            desc="Analysis of streaming activations",
         )
-        
-        if (batch_idx + 1) % 200 == 0:
-            active = sum(1 for a in analyzer.feature_analyses.values() 
-                        if analyzer._activation_counts[a.feature_id] > 0)
-            tqdm.write(f"  Batch {batch_idx+1}: {active} active features")
+    try:
+        for range_start, range_end in ranges:
+            iterator = iter_activation_chunks(
+                model=model,
+                data_path=path_dir,
+                seq_length=tokens_mm.shape[1],
+                layer_num=layer_num,
+                batch_size=batch_size,
+                chunk_sequences=chunk_sequences,
+                start_sequence=range_start,
+                max_sequences=range_end - range_start,
+                device=device,
+            )
+            for sequence_start, sequence_end, acts in iterator:
+                token_chunk = np.array(
+                    tokens_mm[sequence_start:sequence_end], copy=True
+                )
+                if masks_mm is None:
+                    valid = token_chunk != 0
+                else:
+                    valid = np.array(
+                        masks_mm[sequence_start:sequence_end], copy=True
+                    ).astype(bool)
+                flat_tokens = token_chunk[valid]
+                analyzer.process_batch(
+                    activations=torch.from_numpy(acts).float(),
+                    tokens=torch.from_numpy(flat_tokens).long(),
+                    batch_start_idx=sequence_start,
+                )
+                chunk_count += 1
+                if progress is not None:
+                    progress.update(1)
+
+                if verbose == "high" and chunk_count % 200 == 0:
+                    active = sum(
+                        1 for a in analyzer.feature_analyses.values()
+                        if analyzer._activation_counts[a.feature_id] > 0
+                    )
+                    tqdm.write(
+                        f"  Chunk {chunk_count}: {active} observed features"
+                    )
+                elif (
+                    verbose == "low"
+                    and (chunk_count % verbose_interval == 0 or chunk_count == total_chunks)
+                ):
+                    active = sum(
+                        1 for a in analyzer.feature_analyses.values()
+                        if analyzer._activation_counts[a.feature_id] > 0
+                    )
+                    print(
+                        f"Analysis progress: chunk {chunk_count:,}/{total_chunks:,}; "
+                        f"{active:,} observed features"
+                    )
+    finally:
+        if progress is not None:
+            progress.close()
 
     print("\nProcessing completed.")
 
     model.to(device)
-    analyzer.compute_logit_lens()
+    analyzer.compute_logit_lens(logit_batch_size=logit_batch_size)
 
     analyzer.finalize_analysis()
 

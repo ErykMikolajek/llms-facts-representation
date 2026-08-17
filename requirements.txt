@@ -8,5 +8,6 @@ hdbscan
 pandas
 matplotlib
 syntok
+zstandard
 pick
 tqdm

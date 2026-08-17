@@ -1,5 +1,12 @@
 # Project Summary: LLMs Facts Representation
 
+> **Current implementation note (2026-08):** The active objective is resumable,
+> storage-bounded Top-K SAE training. The current CLI supports `sequence`,
+> `train-sae`, `analyze` and `all`; it streams one selected layer through a
+> bounded chunk iterator and does not require a full activation `.npy` file.
+> The older TinyStories/GPT-Neo and MoE sections below describe the historical
+> experiment and downstream work, not the active Pythia training path.
+
 > **Master thesis** focused on extracting, identifying, and visualizing factual knowledge encoded in the internal structure of Large Language Models (LLMs) using Sparse Autoencoders (SAEs).
 
 ---
@@ -208,7 +215,7 @@ llms-facts-representation/
 
 ---
 
-## 8. Default Pipeline Configuration
+## 8. Historical Pipeline Configuration
 
 | Parameter | Value | Location |
 |-----------|-------|----------|
@@ -226,6 +233,15 @@ llms-facts-representation/
 | Learning rate | 1e-3 | `main.py` |
 | LR scheduler | Cosine annealing (min: 1e-5) | `autoencoder_training.py` |
 | Activation threshold | 0.03 | `features_analysis.py` |
+
+## 8a. Active Pythia SAE Profile
+
+The active `local-50gb` profile in `main.py` uses `EleutherAI/pythia-160m`,
+its own tokenizer, layer `6`, `hidden_size=768`, `d_sae=12288`, and `k=64`.
+Training reads `sequenced/attention_mask.npy` and consumes bounded activation
+chunks directly from the GPT-NeoX backbone. Checkpoints contain the optimizer,
+scheduler, RNG states, configuration, and `epoch/next_sequence` cursor, so a
+run can resume without retaining a complete activation dataset.
 
 ---
 
