@@ -1,0 +1,5530 @@
+{
+  "model_variant": "expert_2",
+  "config": {
+    "batch_size": 8,
+    "max_length": 1024,
+    "mc_order_runs_requested": 3,
+    "mc_order_seed": 20260916,
+    "mc_order_runs_note": "Unique answer-order variants; binary tasks have at most two runs. Unchanged deterministic reruns are intentionally not repeated."
+  },
+  "domains": {
+    "2": {
+      "domain_id": 2,
+      "domain_name": "sport",
+      "n_samples": 100,
+      "reference_completion_tokens": 100,
+      "reference_token_weighted_nll": 2.3668327260017397,
+      "reference_token_weighted_ppl": 10.663564311189043,
+      "reference_mean_item_nll": 2.3668327260017397,
+      "multiple_choice_samples": 100,
+      "multiple_choice_accuracy": 0.5,
+      "multiple_choice_variant_accuracy": 0.495,
+      "multiple_choice_mean_order_agreement": 0.505,
+      "multiple_choice_mean_runs": 2.0,
+      "prompt_truncation_fraction": 0.0,
+      "routing": null
+    }
+  },
+  "per_example": [
+    {
+      "benchmark_id": "d2-020de1b52754cef4",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.31953763961792,
+      "gold_mean_nll": 2.31953763961792,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.31953763961792,
+        2.31953763961792
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.31953763961792,
+            2.31953763961792
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.0955467224121094,
+            2.0955467224121094
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-09b4801f9b97404a",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.026430130004883,
+      "gold_mean_nll": 2.026430130004883,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.026430130004883,
+        2.651430130004883
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.026430130004883,
+            2.651430130004883
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.8572942018508911,
+            2.2322940826416016
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-0de69fc3cd9fe20d",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.5426063537597656,
+      "gold_mean_nll": 2.5426063537597656,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 36,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.5426063537597656,
+        2.7926063537597656
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.5426063537597656,
+            2.7926063537597656
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.2023839950561523,
+            2.3273839950561523
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-13df2eb172dcd465",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.434955358505249,
+      "gold_mean_nll": 2.434955358505249,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.434955358505249,
+        2.684955358505249
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.434955358505249,
+            2.684955358505249
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.22940731048584,
+            2.35440731048584
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-1536956ce871655b",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.2836694717407227,
+      "gold_mean_nll": 2.2836694717407227,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 40,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.2836694717407227,
+        2.2836694717407227
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.2836694717407227,
+            2.2836694717407227
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.019237995147705,
+            2.019237995147705
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-15759cc8546876a7",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 1.8982415199279785,
+      "gold_mean_nll": 1.8982415199279785,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        1.8982415199279785,
+        3.0232415199279785
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.8982415199279785,
+            3.0232415199279785
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.7018178701400757,
+            2.5768179893493652
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-158b18c88aedfb55",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 1.9332175254821777,
+      "gold_mean_nll": 1.9332175254821777,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 43,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        1.9332175254821777,
+        2.7457175254821777
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9332175254821777,
+            2.7457175254821777
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.6955335140228271,
+            2.445533514022827
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-1b545d2410c4d587",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.4129481315612793,
+      "gold_mean_nll": 2.4129481315612793,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.1629481315612793,
+        2.4129481315612793
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.1629481315612793,
+            2.4129481315612793
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9051283597946167,
+            1.9051283597946167
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-1b5a9781c58a39ac",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 3.0666399002075195,
+      "gold_mean_nll": 3.0666399002075195,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.1916399002075195,
+        3.0666399002075195
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.1916399002075195,
+            3.0666399002075195
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0218443870544434,
+            2.6468443870544434
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-219ea7f0d8922d71",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.4269938468933105,
+      "gold_mean_nll": 2.4269938468933105,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.9269939661026,
+        2.4269938468933105
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9269939661026,
+            2.4269938468933105
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.6945589780807495,
+            2.069559097290039
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-2342287264d716ce",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.7595856189727783,
+      "gold_mean_nll": 2.7595856189727783,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.1345856189727783,
+        2.7595856189727783
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.1345856189727783,
+            2.7595856189727783
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.915604591369629,
+            2.415604591369629
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-258b18e2345259c4",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.310265064239502,
+      "gold_mean_nll": 2.310265064239502,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.310265064239502,
+        2.560265064239502
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.310265064239502,
+            2.560265064239502
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.0524563789367676,
+            2.3024563789367676
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-26ade256e19f485c",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 1.8831536769866943,
+      "gold_mean_nll": 1.8831536769866943,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 40,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        1.8831536769866943,
+        2.5081536769866943
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.8831536769866943,
+            2.5081536769866943
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.7183359861373901,
+            2.0933361053466797
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-26f5dd84a14a3d4d",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.4619040489196777,
+      "gold_mean_nll": 2.4619040489196777,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.2119040489196777,
+        2.4619040489196777
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.2119040489196777,
+            2.4619040489196777
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.013458251953125,
+            2.138458251953125
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-2772c2436d69dd3c",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 1.8293156623840332,
+      "gold_mean_nll": 1.8293156623840332,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        1.8293156623840332,
+        2.079315662384033
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.8293156623840332,
+            2.079315662384033
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.731088399887085,
+            1.856088399887085
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-27f7a7bd5d9a8fb4",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 1.939850091934204,
+      "gold_mean_nll": 1.939850091934204,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 42,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        1.939850091934204,
+        2.439850091934204
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.939850091934204,
+            2.439850091934204
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.686787486076355,
+            2.0617876052856445
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-2a3a2da6edefe8eb",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.661116123199463,
+      "gold_mean_nll": 2.661116123199463,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.036116123199463,
+        2.661116123199463
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.036116123199463,
+            2.661116123199463
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.7691454887390137,
+            2.3941454887390137
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-2fd42a45a7f36361",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.1560168266296387,
+      "gold_mean_nll": 2.1560168266296387,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 40,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.9060169458389282,
+        2.1560168266296387
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9060169458389282,
+            2.1560168266296387
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.6727800369262695,
+            1.9227800369262695
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-308c85ff03a40846",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.159921884536743,
+      "gold_mean_nll": 2.159921884536743,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 36,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.159921884536743,
+        2.972421884536743
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.159921884536743,
+            2.972421884536743
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.013399124145508,
+            2.513399124145508
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-3bbe9214f7711687",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.475670099258423,
+      "gold_mean_nll": 2.475670099258423,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.100670099258423,
+        2.475670099258423
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.100670099258423,
+            2.475670099258423
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.8983345031738281,
+            2.148334503173828
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-3bf1ffb21ac8a519",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.98998761177063,
+      "gold_mean_nll": 2.98998761177063,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.23998761177063,
+        2.98998761177063
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.23998761177063,
+            2.98998761177063
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9190914630889893,
+            2.5440914630889893
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-3ee9a293134c98b6",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.3949880599975586,
+      "gold_mean_nll": 2.3949880599975586,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.8949880599975586,
+        2.3949880599975586
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.8949880599975586,
+            2.3949880599975586
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.7411282062530518,
+            2.1161282062530518
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-4527b6bc39628d0d",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.400416374206543,
+      "gold_mean_nll": 2.400416374206543,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.400416374206543,
+        2.650416374206543
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.400416374206543,
+            2.650416374206543
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.1780991554260254,
+            2.3030991554260254
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-490ce4958d6d4cb0",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.179269313812256,
+      "gold_mean_nll": 2.179269313812256,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 40,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.179269313812256,
+        2.304269313812256
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.179269313812256,
+            2.304269313812256
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.8892704248428345,
+            2.014270305633545
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-4cf874dd8c288318",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.7665421962738037,
+      "gold_mean_nll": 2.7665421962738037,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.3915421962738037,
+        2.7665421962738037
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.3915421962738037,
+            2.7665421962738037
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.092442035675049,
+            2.342442035675049
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-51ab6c1e2cbd8681",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.4977364540100098,
+      "gold_mean_nll": 2.4977364540100098,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 41,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.4977364540100098,
+        2.9977364540100098
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.4977364540100098,
+            2.9977364540100098
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.170679807662964,
+            2.545679807662964
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-53e4f7153136f514",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.7758421897888184,
+      "gold_mean_nll": 2.7758421897888184,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 41,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.1508421897888184,
+        2.7758421897888184
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.1508421897888184,
+            2.7758421897888184
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.8909987211227417,
+            2.3909988403320312
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-53f8c10fb8f4f367",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.978302478790283,
+      "gold_mean_nll": 2.978302478790283,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.228302478790283,
+        2.978302478790283
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.228302478790283,
+            2.978302478790283
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.8785569667816162,
+            2.503556966781616
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-54ec84ebcdef6b6f",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.4910058975219727,
+      "gold_mean_nll": 2.4910058975219727,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.7410060167312622,
+        2.4910058975219727
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.7410060167312622,
+            2.4910058975219727
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.682516098022461,
+            2.182516098022461
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-55e28c62607762d4",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 1.920084834098816,
+      "gold_mean_nll": 1.920084834098816,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        1.920084834098816,
+        2.9200849533081055
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.920084834098816,
+            2.9200849533081055
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.7275186777114868,
+            2.4775185585021973
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-563f51e8fa73e7bf",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.2040467262268066,
+      "gold_mean_nll": 2.2040467262268066,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.2040467262268066,
+        2.5790467262268066
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.2040467262268066,
+            2.5790467262268066
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9638190269470215,
+            2.3388190269470215
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-5938fe99742279c3",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 1.9357242584228516,
+      "gold_mean_nll": 1.9357242584228516,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        1.9357242584228516,
+        2.9357242584228516
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9357242584228516,
+            2.9357242584228516
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.8376848697662354,
+            2.5876848697662354
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-5a6765bc3212bdfd",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.088655948638916,
+      "gold_mean_nll": 2.088655948638916,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 43,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.088655948638916,
+        2.838655948638916
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.088655948638916,
+            2.838655948638916
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.8519723415374756,
+            2.6019723415374756
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-5c290d79d6dd3014",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.6330511569976807,
+      "gold_mean_nll": 2.6330511569976807,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 1,
+      "answer_index": 0,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.6330511569976807,
+        2.5080511569976807
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 1,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.6330511569976807,
+            2.5080511569976807
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 1,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.308431625366211,
+            2.183431625366211
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-5fc46ac20111e3d2",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 1.9887763261795044,
+      "gold_mean_nll": 1.9887763261795044,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        1.9887763261795044,
+        2.738776206970215
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9887763261795044,
+            2.738776206970215
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.7503974437713623,
+            2.3753974437713623
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-63f6e8b89d9ac456",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.5523056983947754,
+      "gold_mean_nll": 2.5523056983947754,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.0523056983947754,
+        2.5523056983947754
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.0523056983947754,
+            2.5523056983947754
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.8940516710281372,
+            2.2690515518188477
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-6469ca99ee8db4ac",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.4789137840270996,
+      "gold_mean_nll": 2.4789137840270996,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 41,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.1039137840270996,
+        2.4789137840270996
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.1039137840270996,
+            2.4789137840270996
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9089025259017944,
+            2.158902645111084
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-686cd9e604896ef0",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.508190631866455,
+      "gold_mean_nll": 2.508190631866455,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 46,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.258190631866455,
+        2.508190631866455
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.258190631866455,
+            2.508190631866455
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0095767974853516,
+            2.1345767974853516
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-692218a95b37b7a0",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.192690849304199,
+      "gold_mean_nll": 2.192690849304199,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.192690849304199,
+        2.317690849304199
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.192690849304199,
+            2.317690849304199
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.0805020332336426,
+            2.0805020332336426
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-697d597bf062438e",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.628148078918457,
+      "gold_mean_nll": 2.628148078918457,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.378148078918457,
+        2.628148078918457
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.378148078918457,
+            2.628148078918457
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.1069674491882324,
+            2.2319674491882324
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-6bd5c62caa2d5eb1",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.3375418186187744,
+      "gold_mean_nll": 2.3375418186187744,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.2125418186187744,
+        2.3375418186187744
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.2125418186187744,
+            2.3375418186187744
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.919929027557373,
+            2.044929027557373
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-6cb0f2f84cc21010",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.6265835762023926,
+      "gold_mean_nll": 2.6265835762023926,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 40,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.0015835762023926,
+        2.6265835762023926
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.0015835762023926,
+            2.6265835762023926
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.7279458045959473,
+            2.2279458045959473
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-6e04d8a394b8c433",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.9263722896575928,
+      "gold_mean_nll": 2.9263722896575928,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.1763722896575928,
+        2.9263722896575928
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.1763722896575928,
+            2.9263722896575928
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0330185890197754,
+            2.4080185890197754
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-701dda6e22b22986",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.2868361473083496,
+      "gold_mean_nll": 2.2868361473083496,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.91183602809906,
+        2.2868361473083496
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.91183602809906,
+            2.2868361473083496
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.7423977851867676,
+            1.8673977851867676
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-79b23d7a4accf069",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.7667224407196045,
+      "gold_mean_nll": 2.7667224407196045,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 36,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.1417224407196045,
+        2.7667224407196045
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.1417224407196045,
+            2.7667224407196045
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9091030359268188,
+            2.4091029167175293
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-7b6b734e1c7ed79f",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.261735200881958,
+      "gold_mean_nll": 2.261735200881958,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.261735200881958,
+        2.636735200881958
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.261735200881958,
+            2.636735200881958
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9081395864486694,
+            2.283139705657959
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-7bd83167c808ab49",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.1163268089294434,
+      "gold_mean_nll": 2.1163268089294434,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 1,
+      "answer_index": 1,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.2413268089294434,
+        2.1163268089294434
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 1,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.2413268089294434,
+            2.1163268089294434
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 1,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9748306274414062,
+            1.8498306274414062
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-800fc79ed474db02",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.3107872009277344,
+      "gold_mean_nll": 2.3107872009277344,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 44,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.3107872009277344,
+        2.8107872009277344
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.3107872009277344,
+            2.8107872009277344
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.0861682891845703,
+            2.2111682891845703
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-83b5758d05f55059",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.7411015033721924,
+      "gold_mean_nll": 2.7411015033721924,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.9911015033721924,
+        2.7411015033721924
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9911015033721924,
+            2.7411015033721924
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.7912386655807495,
+            2.416238784790039
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-83d7aca6176e8b39",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.8918893337249756,
+      "gold_mean_nll": 2.8918893337249756,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.1418893337249756,
+        2.8918893337249756
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.1418893337249756,
+            2.8918893337249756
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.8573708534240723,
+            2.4823708534240723
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-8969b109852258c5",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.446314573287964,
+      "gold_mean_nll": 2.446314573287964,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.196314573287964,
+        2.446314573287964
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.196314573287964,
+            2.446314573287964
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9958455562591553,
+            2.1208455562591553
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-8cb67c1384c4c0b8",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.014191150665283,
+      "gold_mean_nll": 2.014191150665283,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.014191150665283,
+        2.514191150665283
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.014191150665283,
+            2.514191150665283
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.7704243659973145,
+            2.2704243659973145
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-8d5ba80c8a60ce25",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.09421443939209,
+      "gold_mean_nll": 2.09421443939209,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.09421443939209,
+        2.59421443939209
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.09421443939209,
+            2.59421443939209
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.7788090705871582,
+            2.153809070587158
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-8df76a2e6ca6e5d1",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.516770362854004,
+      "gold_mean_nll": 2.516770362854004,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.016770362854004,
+        2.516770362854004
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.016770362854004,
+            2.516770362854004
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9041568040847778,
+            2.2791566848754883
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-8e58a6a13e7ee99d",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 3.1808860301971436,
+      "gold_mean_nll": 3.1808860301971436,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 44,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.8058860301971436,
+        3.1808860301971436
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.8058860301971436,
+            3.1808860301971436
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.6405901908874512,
+            2.765590190887451
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-8fb3638b7db31f6d",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 3.11439847946167,
+      "gold_mean_nll": 3.11439847946167,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.9893985986709595,
+        3.11439847946167
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9893985986709595,
+            3.11439847946167
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.7247980833053589,
+            2.7247982025146484
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-932a981b7356e18b",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.2409915924072266,
+      "gold_mean_nll": 2.2409915924072266,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.2409915924072266,
+        2.3659915924072266
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.2409915924072266,
+            2.3659915924072266
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.018962860107422,
+            2.143962860107422
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-987c41d1eca04bc6",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.2589120864868164,
+      "gold_mean_nll": 2.2589120864868164,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 42,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.2589120864868164,
+        2.6339120864868164
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.2589120864868164,
+            2.6339120864868164
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.0641348361968994,
+            2.4391348361968994
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-99af5e5c05e55ac5",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.0004563331604004,
+      "gold_mean_nll": 2.0004563331604004,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 41,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.0004563331604004,
+        2.3754563331604004
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0004563331604004,
+            2.3754563331604004
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.7234833240509033,
+            2.0984833240509033
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-9b13df3996876e4f",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.2220358848571777,
+      "gold_mean_nll": 2.2220358848571777,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.2220358848571777,
+        3.0970358848571777
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.2220358848571777,
+            3.0970358848571777
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9835010766983032,
+            2.6710009574890137
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-9b7e9d4099f9d328",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.538076639175415,
+      "gold_mean_nll": 2.538076639175415,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.913076639175415,
+        2.538076639175415
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.913076639175415,
+            2.538076639175415
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.7536134719848633,
+            2.3786134719848633
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-9ce998dd89bf7f6d",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.6810495853424072,
+      "gold_mean_nll": 2.6810495853424072,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.3060495853424072,
+        2.6810495853424072
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.3060495853424072,
+            2.6810495853424072
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0412368774414062,
+            2.2912368774414062
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-9fd6db0a4716b046",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.328964948654175,
+      "gold_mean_nll": 2.328964948654175,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 45,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.328964948654175,
+        2.453964948654175
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.328964948654175,
+            2.453964948654175
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.0432424545288086,
+            2.2932424545288086
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-a0081e64b67328a6",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 1.9362142086029053,
+      "gold_mean_nll": 1.9362142086029053,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 42,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        1.9362142086029053,
+        2.4362142086029053
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9362142086029053,
+            2.4362142086029053
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.6624025106430054,
+            2.162402629852295
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-a1a9cad65466337a",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.0041415691375732,
+      "gold_mean_nll": 2.0041415691375732,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.0041415691375732,
+        2.3791415691375732
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0041415691375732,
+            2.3791415691375732
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.8401380777359009,
+            2.0901379585266113
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-a1c10761150fe8bf",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.156020164489746,
+      "gold_mean_nll": 2.156020164489746,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 40,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.156020164489746,
+        2.656020164489746
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.156020164489746,
+            2.656020164489746
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9493160247802734,
+            2.3243160247802734
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-a56b7da892f515cf",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.0231237411499023,
+      "gold_mean_nll": 2.0231237411499023,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.0231237411499023,
+        2.6481237411499023
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0231237411499023,
+            2.6481237411499023
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9062883853912354,
+            2.2812883853912354
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-a582cda9c21a8373",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.515178680419922,
+      "gold_mean_nll": 2.515178680419922,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.515178680419922,
+        2.640178680419922
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.515178680419922,
+            2.640178680419922
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.172541618347168,
+            2.297541618347168
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-abbca6a48f1a522b",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.0077922344207764,
+      "gold_mean_nll": 2.0077922344207764,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 42,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.0077922344207764,
+        2.2577922344207764
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0077922344207764,
+            2.2577922344207764
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.8373088836669922,
+            1.9623088836669922
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-b4bfb8b5ea74ea5d",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.036322593688965,
+      "gold_mean_nll": 2.036322593688965,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.9113225936889648,
+        2.036322593688965
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9113225936889648,
+            2.036322593688965
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.743483066558838,
+            1.868483066558838
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-be95f4cec129c477",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.109618663787842,
+      "gold_mean_nll": 2.109618663787842,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.109618663787842,
+        2.484618663787842
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.109618663787842,
+            2.484618663787842
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.889835000038147,
+            2.2648348808288574
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-bf88a2f922975ca9",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.450809955596924,
+      "gold_mean_nll": 2.450809955596924,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 42,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.200809955596924,
+        2.450809955596924
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.200809955596924,
+            2.450809955596924
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9264836311340332,
+            2.176483631134033
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-c56d216f82737cb6",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.0611824989318848,
+      "gold_mean_nll": 2.0611824989318848,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 40,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.0611824989318848,
+        2.8111824989318848
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0611824989318848,
+            2.8111824989318848
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.888569712638855,
+            2.3885698318481445
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-c570ff049a4b27e4",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.711256504058838,
+      "gold_mean_nll": 2.711256504058838,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.211256504058838,
+        2.711256504058838
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.211256504058838,
+            2.711256504058838
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9628541469573975,
+            2.3378541469573975
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-ca85741b8bad7a9c",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.752920627593994,
+      "gold_mean_nll": 2.752920627593994,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.127920627593994,
+        2.752920627593994
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.127920627593994,
+            2.752920627593994
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9235725402832031,
+            2.423572540283203
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-d169e862ab1de8f8",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.8367767333984375,
+      "gold_mean_nll": 2.8367767333984375,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 46,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.3367767333984375,
+        2.8367767333984375
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.3367767333984375,
+            2.8367767333984375
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0210611820220947,
+            2.3960611820220947
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-d17e340308272594",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.570438861846924,
+      "gold_mean_nll": 2.570438861846924,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.445438861846924,
+        2.570438861846924
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.445438861846924,
+            2.570438861846924
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.2354278564453125,
+            2.2354278564453125
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-d365b5f7abf1bdf7",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.1762890815734863,
+      "gold_mean_nll": 2.1762890815734863,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 41,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.9262889623641968,
+        2.1762890815734863
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9262889623641968,
+            2.1762890815734863
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.6532950401306152,
+            1.9032950401306152
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-d57c1a5c874c7209",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.2338950634002686,
+      "gold_mean_nll": 2.2338950634002686,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.2338950634002686,
+        2.7338950634002686
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.2338950634002686,
+            2.7338950634002686
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.876268982887268,
+            2.3762688636779785
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-d6fbd3af5ee0b450",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.74210786819458,
+      "gold_mean_nll": 2.74210786819458,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 42,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.11710786819458,
+        2.74210786819458
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.11710786819458,
+            2.74210786819458
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.894736886024475,
+            2.2697367668151855
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-d7e5fd3d1091cfac",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 1.9598541259765625,
+      "gold_mean_nll": 1.9598541259765625,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 41,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        1.9598541259765625,
+        2.4598541259765625
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9598541259765625,
+            2.4598541259765625
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.7207356691360474,
+            2.095735549926758
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-db15ba6358f9ac5d",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.4157164096832275,
+      "gold_mean_nll": 2.4157164096832275,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 43,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.0407164096832275,
+        2.4157164096832275
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.0407164096832275,
+            2.4157164096832275
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.7413545846939087,
+            2.116354465484619
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-de7b5b6fe40933fd",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.508049964904785,
+      "gold_mean_nll": 2.508049964904785,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 40,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.133049964904785,
+        2.508049964904785
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.133049964904785,
+            2.508049964904785
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.8534198999404907,
+            2.103419780731201
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-df0eb251445a657b",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 1.966188669204712,
+      "gold_mean_nll": 1.966188669204712,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        1.966188669204712,
+        2.716188669204712
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.966188669204712,
+            2.716188669204712
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.8679747581481934,
+            2.3679747581481934
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-df3653614f045ef9",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.9308583736419678,
+      "gold_mean_nll": 2.9308583736419678,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.4308583736419678,
+        2.9308583736419678
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.4308583736419678,
+            2.9308583736419678
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.17225980758667,
+            2.42225980758667
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-e0d4adda91bb0195",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.0263588428497314,
+      "gold_mean_nll": 2.0263588428497314,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 40,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.0263588428497314,
+        2.5263588428497314
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0263588428497314,
+            2.5263588428497314
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.7149485349655151,
+            2.2149486541748047
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-e14f54b002c35fcc",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.2909419536590576,
+      "gold_mean_nll": 2.2909419536590576,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 39,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.2909419536590576,
+        2.4159419536590576
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.2909419536590576,
+            2.4159419536590576
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.1325273513793945,
+            2.1325273513793945
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-eb42fd58e1e0c678",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.365866184234619,
+      "gold_mean_nll": 2.365866184234619,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.9908661842346191,
+        2.365866184234619
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9908661842346191,
+            2.365866184234619
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.8150997161865234,
+            2.0650997161865234
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-eb718c56a70f2394",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 1.9912080764770508,
+      "gold_mean_nll": 1.9912080764770508,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 43,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        1.9912080764770508,
+        2.616208076477051
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.9912080764770508,
+            2.616208076477051
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.7749956846237183,
+            2.149995803833008
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-ebce815fabab23b7",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.288609504699707,
+      "gold_mean_nll": 2.288609504699707,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 41,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.038609504699707,
+        2.288609504699707
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.038609504699707,
+            2.288609504699707
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.7999472618103027,
+            1.9249472618103027
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-ebd073bc89290ffd",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.7284493446350098,
+      "gold_mean_nll": 2.7284493446350098,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 40,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.3534493446350098,
+        2.7284493446350098
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.3534493446350098,
+            2.7284493446350098
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.049814224243164,
+            2.299814224243164
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-ec753acd28ef838c",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.0309784412384033,
+      "gold_mean_nll": 2.0309784412384033,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.0309784412384033,
+        3.0309784412384033
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0309784412384033,
+            3.0309784412384033
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9026743173599243,
+            2.6526741981506348
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-ed9b75dd9f34fc32",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.086310625076294,
+      "gold_mean_nll": 2.086310625076294,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.086310625076294,
+        2.586310625076294
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.086310625076294,
+            2.586310625076294
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.8647288084030151,
+            2.2397289276123047
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-ef2930dee152ec7b",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.0136971473693848,
+      "gold_mean_nll": 2.0136971473693848,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 42,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.0136971473693848,
+        2.5136971473693848
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0136971473693848,
+            2.5136971473693848
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.7777851819992065,
+            2.152785301208496
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-f0fcc89be9d981de",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.21071720123291,
+      "gold_mean_nll": 2.21071720123291,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 42,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.9607170820236206,
+        2.21071720123291
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9607170820236206,
+            2.21071720123291
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.7470797300338745,
+            1.9970797300338745
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-f4b9644616a04432",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.534858226776123,
+      "gold_mean_nll": 2.534858226776123,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 43,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.034858226776123,
+        2.534858226776123
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.034858226776123,
+            2.534858226776123
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.7897393703460693,
+            2.1647393703460693
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-f770246389600bcb",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.2003560066223145,
+      "gold_mean_nll": 2.2003560066223145,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 41,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        2.2003560066223145,
+        2.2003560066223145
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.2003560066223145,
+            2.2003560066223145
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 1,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9332791566848755,
+            1.8082791566848755
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.0,
+      "mc_semantic_prediction_agreement": 1.0
+    },
+    {
+      "benchmark_id": "d2-f7bef82dd93b17c2",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.948298931121826,
+      "gold_mean_nll": 2.948298931121826,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 1,
+      "correct": false,
+      "candidate_mean_nll": [
+        1.9482989311218262,
+        2.948298931121826
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.9482989311218262,
+            2.948298931121826
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            1.8367905616760254,
+            2.5867905616760254
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-f9c16175376d84d8",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.337470054626465,
+      "gold_mean_nll": 2.337470054626465,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 38,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.337470054626465,
+        2.712470054626465
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.337470054626465,
+            2.712470054626465
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            2.1244359016418457,
+            2.3744359016418457
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    },
+    {
+      "benchmark_id": "d2-fcc35e7e1e54ae5f",
+      "model_variant": "expert_2",
+      "domain_id": 2,
+      "domain_name": "sport",
+      "task_type": "multiple_choice",
+      "source": "EleutherAI/bigbench",
+      "source_config": "sports_understanding",
+      "gold_sum_nll": 2.0345191955566406,
+      "gold_mean_nll": 2.0345191955566406,
+      "gold_completion_tokens": 1,
+      "prompt_tokens": 37,
+      "prompt_truncated": false,
+      "predicted_index": 0,
+      "answer_index": 0,
+      "correct": true,
+      "candidate_mean_nll": [
+        2.0345191955566406,
+        2.5345191955566406
+      ],
+      "mc_variants": [
+        {
+          "run_index": 0,
+          "option_order": [
+            0,
+            1
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 0,
+          "answer_index": 0,
+          "correct": true,
+          "candidate_mean_nll": [
+            2.0345191955566406,
+            2.5345191955566406
+          ]
+        },
+        {
+          "run_index": 1,
+          "option_order": [
+            1,
+            0
+          ],
+          "predicted_index": 0,
+          "semantic_predicted_index": 1,
+          "answer_index": 1,
+          "correct": false,
+          "candidate_mean_nll": [
+            1.8110294342041016,
+            2.0610294342041016
+          ]
+        }
+      ],
+      "mc_variant_accuracy": 0.5,
+      "mc_semantic_prediction_agreement": 0.5
+    }
+  ]
+}

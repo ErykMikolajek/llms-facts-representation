@@ -1,0 +1,50 @@
+{
+  "format": "gemma_moe_prefill_runtime_v1",
+  "device": "cuda:0",
+  "max_length": 512,
+  "results": [
+    {
+      "batch_size": 1,
+      "sequence_length": 38,
+      "valid_tokens": 38,
+      "warmup": 3,
+      "repeats": 20,
+      "median_seconds": 0.03365009800000962,
+      "p25_seconds": 0.033354805750036576,
+      "p75_seconds": 0.034146071250063414,
+      "tokens_per_second": 1129.2686279840593,
+      "cuda_baseline_allocated_bytes": 543426560,
+      "cuda_peak_allocated_bytes": 544742912,
+      "cuda_incremental_peak_bytes": 1316352
+    },
+    {
+      "batch_size": 4,
+      "sequence_length": 39,
+      "valid_tokens": 150,
+      "warmup": 3,
+      "repeats": 20,
+      "median_seconds": 0.046440842000038174,
+      "p25_seconds": 0.0459932562500569,
+      "p75_seconds": 0.046953497499998775,
+      "tokens_per_second": 3229.9155988575035,
+      "cuda_baseline_allocated_bytes": 543428608,
+      "cuda_peak_allocated_bytes": 548543488,
+      "cuda_incremental_peak_bytes": 5114880
+    },
+    {
+      "batch_size": 8,
+      "sequence_length": 43,
+      "valid_tokens": 308,
+      "warmup": 3,
+      "repeats": 20,
+      "median_seconds": 0.057378035000056116,
+      "p25_seconds": 0.055744745499936244,
+      "p75_seconds": 0.05774759250002148,
+      "tokens_per_second": 5367.907771670793,
+      "cuda_baseline_allocated_bytes": 543431680,
+      "cuda_peak_allocated_bytes": 555205632,
+      "cuda_incremental_peak_bytes": 11773952
+    }
+  ],
+  "warning": "Hardware- and implementation-specific prefill measurement; not an autoregressive decode or energy benchmark."
+}
