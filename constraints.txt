@@ -1,0 +1,19 @@
+# Zestaw zweryfikowany lokalnie na CPython 3.11 (macOS arm64).
+torch==2.14.0
+transformers==4.57.6
+sae-lens==6.50.0
+transformer-lens==3.2.1
+datasets==4.8.5
+huggingface-hub==0.36.2
+numpy==1.26.4
+scipy==1.17.1
+scikit-learn==1.9.0
+hdbscan==0.8.44
+pandas==2.3.3
+matplotlib==3.11.1
+syntok==1.4.4
+zstandard==0.25.0
+pick==2.6.0
+tqdm==4.70.0
+kaggle==2.2.4
+ipykernel==7.3.0

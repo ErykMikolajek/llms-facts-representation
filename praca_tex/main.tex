@@ -1,0 +1,94 @@
+\documentclass[12pt,a4paper,oneside]{scrbook}
+\usepackage{graphicx} % do dodawania zdjęć
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\setstretch{1.5}
+\usepackage{lmodern}
+\usepackage[polish]{babel}
+\usepackage[autostyle=true]{csquotes}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{siunitx}
+\usepackage{microtype}
+\usepackage{svg}
+\usepackage{pdfpages}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage[most]{tcolorbox} % dla kart z interpretacją cech w aneksie
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\sisetup{output-decimal-marker = {,}}
+\sisetup{group-separator = {\,}}
+
+\setlength{\skip\footins}{1.2cm}
+
+\begin{document}
+% Logo AGH
+\thispagestyle{empty}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/agh_logo.jpg}
+\end{figure}
+\vspace{-0.41cm}
+\begin{center}
+    \textbf{\fontsize{9.5}{9}\selectfont
+    \begin{tabular}{@{}c@{}} % @{} usuwa dodatkowe marginesy w tabular
+    WYDZIAŁ ELEKTROTECHNIKI, AUTOMATYKI, INFORMATYKI I INŻYNIERII\\
+    BIOMEDYCZNEJ
+    \end{tabular}}
+\end{center}
+    
+
+% Tytuł pracy
+\vspace{1.7cm}
+\begin{center}
+    \textbf{\Huge Praca dyplomowa} \\
+    \vspace{1.5cm}
+    \textbf{\large Identyfikacja i wizualizacja reprezentacji faktów w strukturze modeli językowych -- analiza zależności i zastosowania w budowie wyspecjalizowanych modeli} \\
+    \vspace{1cm}
+    \textbf{\large Identification and Visualization of Fact Representations in Language Model Structures -- Dependency Analysis and Applications in Domain-Specific Model Development}
+\end{center}
+
+\vspace{1.5cm}
+\begin{addmargin}[1cm]{1cm}
+    \begin{tabbing}
+        \textbf{Autor:} \hspace{3.5cm} \=  inż. Eryk Mikołajek \\
+        \textbf{Kierunek studiów:} \> Informatyka i Systemy Inteligentne \\
+        \textbf{Opiekun pracy:} \> dr hab. Adrian Horzyk \end{tabbing}
+\end{addmargin}
+
+\vspace{1.5cm}
+\begin{center}
+    Kraków, 2026
+\end{center}
+
+\tableofcontents
+
+\input{chapters/1_wstep}
+
+\input{chapters/2_wprowadzenie_teoretyczne.tex}
+
+\input{chapters/3_srodowisko_eksperymentalne.tex}
+
+\input{chapters/4_klasteryzacja_i_topografia_wag}
+
+\input{chapters/5_pruning_i_budowa_architektury_moe}
+
+\input{chapters/6_walidacja_i_wizualizacja}
+
+\input{chapters/7_zakonczenie}
+
+\addcontentsline{toc}{chapter}{Bibliografia}
+\bibliographystyle{unsrt}
+\bibliography{bibliografia}
+
+% Aneksy z interpretacją cech:
+\appendix
+\input{appendices/A_katalog_cech_pythia}
+
+\end{document}

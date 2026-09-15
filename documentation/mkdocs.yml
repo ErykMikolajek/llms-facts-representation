@@ -1,0 +1,74 @@
+site_name: Dokumentacja eksperymentu SAE i MoE
+site_description: Szczegółowa dokumentacja kodu eksperymentalnego pracy magisterskiej
+repo_url: https://github.com/ErykMikolajek/llms-facts-representation
+repo_name: ErykMikolajek/llms-facts-representation
+docs_dir: docs
+site_dir: site
+strict: true
+theme:
+  name: material
+  language: pl
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - content.tooltips
+    - search.highlight
+plugins:
+  - search:
+      # Lunr bundled with MkDocs Material has no Polish stemmer.
+      lang: en
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+nav:
+  - Start:
+      - Przegląd: index.md
+      - Przepływ eksperymentu: pipeline.md
+      - Wykonany eksperyment Gemma: gemma_moe_experiment.md
+      - Audyt zmian i problemów: research_audit.md
+      - Zakres i status plików: scope.md
+      - Układ repozytorium: repository_layout.md
+  - Pipeline SAE:
+      - sae_pipeline/main.py: main.md
+      - sae_pipeline/dataset_sequencing.py: dataset_sequencing.md
+      - sae_pipeline/activations_collecting.py: activations_collecting.md
+      - sae_pipeline/autoencoder_training.py: autoencoder_training.md
+      - sae_pipeline/features_analysis.py: features_analysis.md
+      - sae_pipeline/gemma_scope_analysis.py: gemma_scope_analysis.md
+  - Domeny i neurony MLP:
+      - domain_triage/semantic_domain_triage.py: semantic_domain_triage.md
+      - Stabilność i cross-view: triage_stability.md
+      - Przygotowanie domen i danych: domain_datasets.md
+      - domain_mapping/topographic_mlp_sae_mapping.py: topographic_mlp_sae_mapping.md
+      - domain_mapping/domain_mlp_activation_mapping.py: domain_mlp_activation_mapping.md
+      - Walidacja selektywności SAE: domain_selectivity.md
+      - domain_mapping/domain_mlp_pruning.py: domain_mlp_pruning.md
+  - Router i MoE:
+      - moe/router_training.py: router_training.md
+      - moe/moe_assembly.py: moe_assembly.md
+      - evaluation/moe_validation.py: moe_validation.md
+      - Zamrożenie i bundle: reproducibility.md
+  - Niezależny benchmark:
+      - Protokół i ewaluator: independent_benchmark.md
+      - Notebook Kaggle: kaggle_moe_benchmark.md
+      - Osobni eksperci dziedzinowi: domain_expert_benchmark.md
+  - Infrastruktura:
+      - common/utils.py: utils.md
+      - kaggle/cli/kaggle_pipeline.py: kaggle_pipeline.md

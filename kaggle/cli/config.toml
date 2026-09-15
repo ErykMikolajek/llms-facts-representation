@@ -1,0 +1,73 @@
+kaggle_executable = "kaggle"
+
+[pipeline]
+default_workflow = "pythia"
+work_dir = ".work"
+publisher_account = "account1"
+# Te identyfikatory są kanoniczne niezależnie od konta uruchamiającego kernel.
+dataset = "erykmikoajek/trained-sae-models"
+code_dataset = "erykmikoajek/sae-training-and-moeffication"
+dataset_sources = [
+  "erykmikoajek/sae-training-and-moeffication",
+  "erykmikoajek/trained-sae-models",
+  "dschettler8845/the-pile-dataset-part-00-of-29",
+]
+accelerator = "NvidiaTeslaT4"
+enable_internet = true
+kernel_private = true
+poll_seconds = 60
+dataset_timeout_seconds = 1800
+kernel_timeout_seconds = 46800
+
+[workflows.pythia]
+checkpoint_filename = "analysis_checkpoint_pythia.pt"
+checkpoint_output_relative_path = "pythia160m_sae_pilecc/analysis/analysis_checkpoint_pythia.pt"
+notebook = "../notebooks/kaggle_pythia160m_sae.ipynb"
+state_file = ".state/pythia.json"
+kernel_slug = "pythia-160m-sae-analysis"
+kernel_title = "Pythia-160M SAE analysis"
+
+[workflows.gemma]
+checkpoint_filename = "analysis_checkpoint_gemma_scope2_270m.pt"
+checkpoint_output_relative_path = "gemma_scope2_270m_pilecc/analysis/analysis_checkpoint_gemma_scope2_270m.pt"
+notebook = "../notebooks/kaggle_gemma_scope2_270m.ipynb"
+state_file = ".state/gemma.json"
+kernel_slug = "gemma-scope-2-270m-sae-analysis"
+kernel_title = "Gemma Scope 2 270M SAE analysis"
+model_sources = ["google/gemma-3/transformers/gemma-3-270m/2"]
+
+[workflows.moe_benchmark]
+dataset = "erykmikoajek/gemma-moe-benchmark-assets-v3"
+code_dataset = "erykmikoajek/gemma-moe-benchmark-assets-v3"
+dataset_sources = ["erykmikoajek/gemma-moe-benchmark-assets-v3"]
+checkpoint_filename = "gemma_moe_independent_benchmark_results.zip"
+checkpoint_output_relative_path = "gemma_moe_independent_benchmark_results.zip"
+notebook = "../notebooks/kaggle_gemma_moe_benchmark.ipynb"
+state_file = ".state/moe_benchmark.json"
+kernel_slug = "gemma-270m-domain-moe-benchmark"
+kernel_title = "Gemma 270M domain MoE benchmark"
+model_sources = ["google/gemma-3/transformers/gemma-3-270m/2"]
+
+[workflows.domain_expert_benchmark]
+dataset = "erykmikoajek/gemma-domain-expert-benchmark-assets-v1"
+code_dataset = "erykmikoajek/gemma-domain-expert-benchmark-assets-v1"
+dataset_sources = ["erykmikoajek/gemma-domain-expert-benchmark-assets-v1"]
+checkpoint_filename = "gemma_domain_expert_benchmark_results.zip"
+checkpoint_output_relative_path = "gemma_domain_expert_benchmark_results.zip"
+notebook = "../notebooks/kaggle_gemma_domain_expert_benchmark.ipynb"
+state_file = ".state/domain_expert_benchmark.json"
+kernel_slug = "gemma-270m-standalone-domain-expert-benchmark"
+kernel_title = "Gemma 270M standalone domain expert benchmark"
+model_sources = ["google/gemma-3/transformers/gemma-3-270m/2"]
+
+[accounts.account1]
+username = "erykmikoajek"
+config_dir = "~/.kaggle"
+
+[accounts.account2]
+username = "erykalt"
+config_dir = "~/.config/kaggle/accounts/account2"
+
+[accounts.account3]
+username = "mikoajmikoajek"
+config_dir = "~/.config/kaggle/accounts/account3"

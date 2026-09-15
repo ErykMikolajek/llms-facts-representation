@@ -1,0 +1,59 @@
+{
+  "format": "gemma_moe_independent_benchmark_v3",
+  "seed": 20260916,
+  "sealed_status": "evaluation-only; do not tune masks, router, threshold, prompts, or hyperparameters against these answers",
+  "independence_definition": "No source repository or exact normalized content hash was used in domain discovery, router training, pruning, confidence calibration, or the first holdout. Public benchmark contamination in the base model pretraining remains unknown.",
+  "samples_per_domain": 100,
+  "excluded_consumed_benchmark_ids": 1087,
+  "excluded_consumed_sports_statements": 187,
+  "consumed_benchmark_id_overlap": 0,
+  "math_benchmark": "elementary",
+  "total_samples": 600,
+  "domain_counts": {
+    "0": 100,
+    "1": 100,
+    "2": 100,
+    "3": 100,
+    "4": 100,
+    "5": 100
+  },
+  "task_type_counts": {
+    "multiple_choice": 500,
+    "python_generation": 100
+  },
+  "sources": [
+    {
+      "repository": "EleutherAI/bigbench",
+      "revision": "f975b5fd41084e0f90085b98292430e8d56609dc",
+      "license": "Apache-2.0"
+    },
+    {
+      "repository": "cais/mmlu",
+      "revision": "c30699e8356da336a370243923dbaf21066bb9fe",
+      "license": "MIT"
+    },
+    {
+      "repository": "google-research-datasets/mbpp",
+      "revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "repository": "synthetic-elementary-arithmetic",
+      "revision": "v1",
+      "license": "CC0-1.0"
+    }
+  ],
+  "source_overlap_with_previous_pipeline": [],
+  "exact_content_overlap_with_previous_pipeline": 0,
+  "benchmark_file": {
+    "path": "data/gemma_scope2_270m_pilecc/analysis/domain_triage_selected_6_20260914/independent_benchmark_v3_sealed/benchmark.jsonl",
+    "bytes": 942272,
+    "sha256": "297973c3460ff6a7205a6811c316c737c1946f0a9eb7cbc3b0aecf06c69b5fe5"
+  },
+  "primary_metrics": {
+    "all_domains": "paired change in teacher-forced reference-completion NLL",
+    "multiple_choice": "zero-shot normalized candidate-log-likelihood accuracy with deterministic answer-order robustness runs and item-level bootstrap",
+    "math": "balanced elementary arithmetic multiple choice with LaTeX notation",
+    "mbpp": "reference-code NLL and generated-code syntax rate; pass@1 is intentionally disabled because Kaggle is not a security sandbox for arbitrary generated code"
+  }
+}

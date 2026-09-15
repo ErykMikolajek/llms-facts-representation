@@ -1,8 +1,12 @@
 models/
 venv/
+.venv/
 data/
 other/
 
 __pycache__/
+*.py[cod]
+documentation/site/
 
 .DS_Store
+\[DONOTINCLUDE]*.txt

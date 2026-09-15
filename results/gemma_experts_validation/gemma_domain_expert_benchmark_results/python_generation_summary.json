@@ -1,0 +1,9 @@
+{
+  "n_samples": 100,
+  "base_python_syntax_valid": 0.96,
+  "expert_python_syntax_valid": 0.74,
+  "base_to_expert_valid": 2,
+  "base_to_expert_invalid": 24,
+  "exact_paired_pvalue": 1.049041748046875e-05,
+  "warning": "Syntax validity is not functional pass@1; generated code was not executed."
+}

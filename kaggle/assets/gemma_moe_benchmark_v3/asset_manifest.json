@@ -1,0 +1,165 @@
+{
+  "format": "gemma_moe_kaggle_assets_v1",
+  "kaggle_model_source": "google/gemma-3/transformers/gemma-3-270m/2",
+  "model_identity": "models/gemma-3-270m",
+  "layer_num": 9,
+  "expert_source": "base_masks",
+  "confidence_threshold": 0.8246666193008424,
+  "domain_ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "domain_names": [
+    "prawo i orzecznictwo",
+    "biomedycyna",
+    "sport",
+    "polityka i wiadomości",
+    "matematyka / zapis LaTeX",
+    "Python"
+  ],
+  "benchmark_format": "gemma_moe_independent_benchmark_v3",
+  "benchmark_sha256": "297973c3460ff6a7205a6811c316c737c1946f0a9eb7cbc3b0aecf06c69b5fe5",
+  "base_model_files": [
+    {
+      "filename": "config.json",
+      "bytes": 1352,
+      "sha256": "8983343e5bfbf8e336d222a522a1d781443491e9de2d081b8856f8fd26ab6046"
+    },
+    {
+      "filename": "model.safetensors",
+      "bytes": 536223056,
+      "sha256": "abb58eb73aece5163624090d5383c59cbcdb9e9539ec84cb864f74386c4b21d5"
+    },
+    {
+      "filename": "tokenizer.json",
+      "bytes": 33384570,
+      "sha256": "7d4046bf0505a327dd5a0abbb427ecd4fc82f99c2ceaa170bc61ecde12809b0c"
+    },
+    {
+      "filename": "tokenizer_config.json",
+      "bytes": 1155375,
+      "sha256": "94b03056ec5831e9021c3e3fe9db682778c4f2d081c4188f1fcb8b90541cf1cf"
+    }
+  ],
+  "runtime_files": [
+    {
+      "path": "benchmark/benchmark.jsonl",
+      "bytes": 942272,
+      "sha256": "297973c3460ff6a7205a6811c316c737c1946f0a9eb7cbc3b0aecf06c69b5fe5"
+    },
+    {
+      "path": "benchmark/benchmark_manifest.json",
+      "bytes": 2325,
+      "sha256": "1a86b4c20bb67162f1fae50d7f0232b608d603a11dea21712ad175f72ebd878e"
+    },
+    {
+      "path": "code/common/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "code/common/utils.py",
+      "bytes": 2440,
+      "sha256": "25e013999b4fddce3daf58440037779542804def133dd7112af1a7711f906abb"
+    },
+    {
+      "path": "code/domain_mapping/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "code/domain_mapping/domain_mlp_activation_mapping.py",
+      "bytes": 37160,
+      "sha256": "01303324235fecc5131b840179a2122e6f1fcf8820bc86c4848c2b4ca143f183"
+    },
+    {
+      "path": "code/domain_mapping/topographic_mlp_sae_mapping.py",
+      "bytes": 22018,
+      "sha256": "af82972c492befd06ae82141b248c8bdd3a1cc78b04a1482d6b87e41cb5918f8"
+    },
+    {
+      "path": "code/evaluation/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "code/evaluation/moe_benchmark.py",
+      "bytes": 37610,
+      "sha256": "095647295a528715963df1f22de7fd3fbe583a6c8f5e00dd06aa7551b0d26be4"
+    },
+    {
+      "path": "code/moe/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "code/moe/moe_assembly.py",
+      "bytes": 24814,
+      "sha256": "ece4a84b38af625f28336d652b8bdb43b7c30a1d64c00c4436623ebd19472635"
+    },
+    {
+      "path": "code/moe/router_training.py",
+      "bytes": 34013,
+      "sha256": "8dfe7528cd1edd409166d1017e6b0553f3f6708cd9d9cfc9b69fd9b18908e5ba"
+    },
+    {
+      "path": "code/sae_pipeline/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "code/sae_pipeline/activations_collecting.py",
+      "bytes": 11792,
+      "sha256": "299e6e6741269f2a2454538bb7acffe7837d44dd18dc7d0086e09a09aaa87897"
+    },
+    {
+      "path": "experts/domain_0_mask.npy",
+      "bytes": 2176,
+      "sha256": "97ab0cfc0fbfe480cb64a44a2808ca130effeea98359a24482c647537f49a782"
+    },
+    {
+      "path": "experts/domain_1_mask.npy",
+      "bytes": 2176,
+      "sha256": "cb4d499a972f8190c30d07fe37c4225278a2e26a23770107288870b087db9de3"
+    },
+    {
+      "path": "experts/domain_2_mask.npy",
+      "bytes": 2176,
+      "sha256": "6e7978dcfd4fa522b8578cbf478b1d192385950959f645fcbb52309ec13b3e63"
+    },
+    {
+      "path": "experts/domain_3_mask.npy",
+      "bytes": 2176,
+      "sha256": "f6efe18c2bfc5ababce94b89558c5eaf23cec168b9ffa2113aa6fec35c48e7c1"
+    },
+    {
+      "path": "experts/domain_4_mask.npy",
+      "bytes": 2176,
+      "sha256": "f6f60f86d7e951afec6a5b72823d3d4e64be60f9c4eabf04cd50d5b2c64fa249"
+    },
+    {
+      "path": "experts/domain_5_mask.npy",
+      "bytes": 2176,
+      "sha256": "bfb050b6193177dc8e1db0e1404bad9e0e8296a1bfb0bfe52659cb893424a84b"
+    },
+    {
+      "path": "experts/pruning_summary.json",
+      "bytes": 4381,
+      "sha256": "8d58a967e6daf034fa74f088989426eeb2448605d97729c9b8aa54fda4925378"
+    },
+    {
+      "path": "router/router.pt",
+      "bytes": 35165,
+      "sha256": "0bec5dacecf78fda6c20cf6b3057992894007b9078ff0899c693ec0eefe564ce"
+    }
+  ],
+  "security": {
+    "benchmark_answers_present": true,
+    "training_on_assets_forbidden": true,
+    "generated_python_execution_default": false
+  }
+}
