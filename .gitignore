@@ -3,6 +3,8 @@ venv/
 .venv/
 data/
 other/
+praca_tex/
+
 
 __pycache__/
 *.py[cod]
