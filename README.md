@@ -1,8 +1,14 @@
 # llms-facts-representation
 
-Repozytorium do pracy magisterskiej nad reprezentacją faktów i konceptów w małym modelu językowym. Obejmuje storage-bounded trening **Top-K Sparse Autoencodera** oraz eksperymentalną ścieżkę Gemma Scope 2 → semantic triage → pruning → hard-routed MoE.
+Repozytorium do pracy magisterskiej nad reprezentacją faktów i konceptów w
+małym modelu językowym. Łączy analizę cech wyodrębnionych przez rzadkie
+autoenkodery (SAE) z klasteryzacją domen semantycznych, pruningiem neuronów MLP
+i budową modelu typu hard-routed Mixture of Experts (MoE).
 
-Głównym celem jest `EleutherAI/pythia-160m` (GPT-NeoX), z warstwą `6`, `hidden_size=768` i MLP `768 -> 3072 -> 768`. Profil `tiny` zachowuje wcześniejszą konfigurację TinyStories do smoke testów.
+Docelowy eksperyment wykorzystuje `google/gemma-3-270m`, warstwę `9` oraz
+gotowy autoenkoder JumpReLU `layer_9_width_16k_l0_medium` z Gemma Scope 2.
+Osobny tor dla `EleutherAI/pythia-160m` obejmuje własny trening Top-K SAE na
+warstwie `6`. Profil `tiny` zachowuje konfigurację TinyStories do smoke testów.
 
 Szczegółowy opis architektury, przepływów i artefaktów znajduje się w
 [`documentation/architecture.md`](documentation/architecture.md).
@@ -19,9 +25,17 @@ diagramem pipeline'u znajduje się w [`documentation/`](documentation/README.md)
 - trening można wznowić po zakończonym chunku,
 - analiza cech również czyta aktywacje strumieniowo i liczy logit lens blokami.
 
-Pipeline Gemmy został wykonany do etapu niezależnej walidacji. Kryteria
-badawcze i kolejność uruchomienia opisuje
-[`reports/GEMMA_MOE_RESEARCH_AUDIT.md`](reports/GEMMA_MOE_RESEARCH_AUDIT.md).
+Pipeline Gemmy został wykonany do etapu końcowej walidacji modeli dziedzinowych
+i MoE. Opis przepływu eksperymentu znajduje się w
+[`documentation/docs/pipeline.md`](documentation/docs/pipeline.md), a wyniki w
+[`results/gemma_experts_validation/`](results/gemma_experts_validation/) oraz
+[`results/gemma_moe_validation/`](results/gemma_moe_validation/).
+
+W końcowym przebiegu wybrano sześć domen: prawo, biomedycynę, sport, politykę,
+matematykę i Python. Dla każdej z nich utworzono ekspertów zachowujących
+1536 z 2048 neuronów MLP warstwy 9. Następnie połączono ich z liniowym routerem
+i pełnym MLP używanym przy niskiej pewności klasyfikacji. Benchmarki modeli
+dziedzinowych i gotowego MoE zostały wykonane i zapisane w katalogu `results/`.
 
 ## Struktura repozytorium
 
@@ -35,7 +49,6 @@ moe/             router, składanie MoE, zamrożenie protokołu i bundle
 evaluation/      holdout PPL oraz niezależny benchmark kompetencyjny
 kaggle/          CLI, notebooki, buildery i wersjonowane assety
 tests/           testy jednostkowe i regresyjne
-reports/         raporty badawcze
 results/         zaimportowane wyniki eksperymentów
 documentation/   źródła MkDocs i dokumenty architektoniczne
 common/          współdzielone funkcje techniczne
@@ -50,21 +63,20 @@ common/          współdzielone funkcje techniczne
 - `sae_pipeline/features_analysis.py` - raport tekstowy i JSON z analizą cech SAE.
 - `sae_pipeline/gemma_scope_analysis.py` - streamingowa analiza gotowego SAE Gemma Scope 2
   dla Gemma 3 270M (`resid_post`), bez treningu.
-- `domain_triage/semantic_domain_triage.py` - logit lens, HDBSCAN, domeny i walidacje domenowe.
-- `domain_mapping/topographic_mlp_sae_mapping.py` - korelacja residual hidden state z domenami SAE, etap eksploracyjny.
+- `domain_triage/semantic_domain_triage.py` - reprezentacja kontekstów aktywacji, HDBSCAN oraz wybór domen.
+- `domain_triage/semantic_domain_stability.py` - ocena stabilności domen dla alternatywnych konfiguracji triażu.
+- `domain_mapping/topographic_mlp_sae_mapping.py` - wcześniejszy, eksploracyjny wariant mapowania.
 - `domain_mapping/domain_mlp_activation_mapping.py` - mapowanie fizycznych neuronów MLP przez hook wejścia projekcji wyjściowej (`c_proj`, `dense_4h_to_h` albo `down_proj`).
+- `domain_mapping/validate_domain_sae_selectivity.py` - ocena selektywności sygnałów domenowych SAE.
 - `domain_mapping/domain_mlp_pruning.py` - progi `tau`, maski neuronów i eksport MLP-only ekspertów.
 - `moe/router_training.py` - trening liniowego routera domen na wejściu do MLP.
 - `moe/moe_assembly.py` - składanie pojedynczego eksperta albo hard-routed MoE.
 - `evaluation/moe_validation.py` - walidacja causal LM loss/perplexity dla bazy, ekspertów i MoE.
+- `evaluation/domain_expert_benchmark.py` - benchmark samodzielnych modeli dziedzinowych.
+- `evaluation/moe_benchmark.py` - wspólny benchmark modelu bazowego i gotowego MoE.
 - `common/utils.py` - pomocniczy wybór urządzenia i liczby procesów.
 
 Katalogi `data/`, `models/` i `other/` są ignorowane przez Git, bo zawierają duże dane, checkpointy i artefakty eksperymentalne.
-
-Katalog `praca_tex/source_code/` jest historycznym snapshotem do materiałów
-pracy, nie źródłem wykonywalnym. Po zamknięciu eksperymentu należy wygenerować
-go ponownie z plików w pakietach etapowych; bieżącego pipeline'u nie należy
-uruchamiać z tej kopii.
 
 ## Instalacja
 
@@ -273,24 +285,25 @@ rzutowany przez macierz unembeddingu, bez pełnego uwzględnienia końcowej
 RMSNorm Gemmy. Oficjalny model card Gemma Scope 2 opisuje release, strukturę
 folderów i rekomendowane szerokości SAE.
 
-Po zakończeniu analizy dalszą ścieżkę dla Gemmy — wraz z obowiązkowym
-rozdzieleniem danych discovery/development/holdout — opisuje
-[`reports/GEMMA_MOE_RESEARCH_AUDIT.md`](reports/GEMMA_MOE_RESEARCH_AUDIT.md).
+Pełny przebieg od analizy Gemma Scope do benchmarku opisuje
+[`documentation/docs/pipeline.md`](documentation/docs/pipeline.md).
 
-Gotowe porównanie domenowego MoE z modelem bazowym na niezależnych źródłach
-opisuje [`reports/GEMMA_MOE_INDEPENDENT_BENCHMARK.md`](reports/GEMMA_MOE_INDEPENDENT_BENCHMARK.md).
-Notebook `kaggle/notebooks/kaggle_gemma_moe_benchmark.ipynb` korzysta obecnie z prywatnej paczki
-`kaggle/assets/gemma_moe_benchmark_v3.zip`. Follow-up ma 600 nowych przykładów,
-wyklucza rekordy v1/v2, zastępuje GSM8K arytmetyką elementarną, testuje kilka
-kolejności odpowiedzi MC i mierzy implementacyjny koszt prefill.
+Końcowy benchmark MoE obejmuje 600 przykładów z sześciu domen, pochodzących z
+MMLU, BIG-bench i MBPP oraz z przygotowanego zbioru prostych zadań
+arytmetycznych. Wyniki, dane sparowane i wykres porównawczy znajdują się w
+[`results/gemma_moe_validation/gemma_moe_benchmark_results_15_09/`](results/gemma_moe_validation/gemma_moe_benchmark_results_15_09/).
+Notebook uruchamiający ocenę znajduje się w
+[`kaggle/notebooks/kaggle_gemma_moe_benchmark.ipynb`](kaggle/notebooks/kaggle_gemma_moe_benchmark.ipynb).
 
 Osobna analiza modeli dziedzinowych jest dostępna w
 `evaluation/domain_expert_benchmark.py` oraz notebooku
 `kaggle/notebooks/kaggle_gemma_domain_expert_benchmark.ipynb`. Każdy model
 zastępuje MLP warstwy 9 jednym ekspertem działającym na wszystkich tokenach,
-bez routera i fallbacku. Notebook porównuje jakość na własnej domenie, liczbę
-parametrów, teoretyczne MAC oraz zmierzone latency, throughput i VRAM. Pełna
-macierz cross-domain jest opcjonalna.
+bez routera i fallbacku. Notebook porównuje każdy model z bazową Gemmą na
+zadaniach z przypisanej mu domeny. Zapisane wyniki znajdują się w
+[`results/gemma_experts_validation/gemma_domain_expert_benchmark_results/`](results/gemma_experts_validation/gemma_domain_expert_benchmark_results/).
+Pełna macierz ekspert–domena pozostaje opcjonalnym trybem narzędzia i nie była
+częścią końcowego benchmarku.
 
 ## Semantic Domain Triage
 
@@ -530,14 +543,3 @@ python3 -m evaluation.moe_validation \
   --batch-size 2 \
   --allow-development-eval
 ```
-
-## Co Jest Jeszcze Do Zrobienia
-
-Najważniejsze dalsze prace po implementacji pierwszej wersji MoE:
-
-1. Uruchomić pełny pipeline na 3-5 niepustych domenach i zapisać rzeczywiste wyniki PPL.
-2. Przygotować ręcznie oznaczone, niezależne zbiory development i holdout.
-3. Dodać baseline'y masek losowych i magnitude pruning oraz kilka seedów.
-4. Zmierzyć czas, VRAM/RAM i liczbę parametrów kompaktowych ekspertów na GPU.
-
-Te etapy powinny powstać dopiero po uzyskaniu 3-5 niepustych, sensownych domen semantycznych.
